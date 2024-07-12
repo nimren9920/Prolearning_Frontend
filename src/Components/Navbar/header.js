@@ -42,20 +42,20 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
   return (
     <>
       <nav className="bg-[#FF725E] border-solid border-black">
-        <div className="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           {!isSideNavOpen && (
             <button onClick={toggleSideNav} className="fixed top-4 p-4 left-4 z-0 p-2 bg-[#FF725E] text-white rounded-md">
               <FaAlignJustify />
             </button>
           )}
 
-          <div className='mx-2 '>
+          <div className='mx-2 sm:mx-8'>
             <Link to={"/dashboard"} className="flex items-center space-x-3 rtl:space-x-reverse">
               <span className="self-center text-2xl font-semibold whitespace-nowrap text-white px-10 sm:px-1 ">HI! {data?.fullName}</span>
             </Link>
           </div>
           <div className='flex flex-row items-center'>
-            <div className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white ">
+            <div className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">
               {data?.role}
             </div>
             <div className='relative mx-2' ref={dropdownRef}>
