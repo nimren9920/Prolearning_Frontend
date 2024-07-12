@@ -40,16 +40,13 @@ const routes = createBrowserRouter([
      },
      {
       path:"/create/topic/:id",
-      element:<Editor/>
+      element:<RoleAuth aut={true} role={"TEACHER"} ><Editor/></RoleAuth>
      },
      {
       path:"/topic/:id",
       element:<Particulartopics/>
      },
-    //  {
-    //   path:"/topic/:id",
-    //   element:<Particulartopics/>
-    //  },
+
      {
       path:"/chapter/:id",
       element:<Topics/>
