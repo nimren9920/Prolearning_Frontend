@@ -49,9 +49,9 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
             </button>
           )}
 
-          <div className='mx-2 sm:mx-8'>
-            <Link to={"/dashboard"} className="flex items-center space-x-3 rtl:space-x-reverse">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap text-white px-10 sm:px-1 ">HI! {data?.fullName}</span>
+          <div className='mx-2 sm:mx-8 w-2 sm:w-fit invisible sm:visible'>
+            <Link  className="flex items-center space-x-3 rtl:space-x-reverse">
+              <span className="self-center text-2xl font-semibold whitespace-nowrap text-white z-0 ">HI! {data?.fullName}</span>
             </Link>
           </div>
           <div className='flex flex-row items-center'>

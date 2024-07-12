@@ -9,7 +9,7 @@ const Subjects = () => {
   },[])
   return (
     <>
-  {data ? (<> <div className="flex flex-col gap-2 p-2 sm:flex-row">
+  {data ? (<> <div className="flex flex-col gap-2 p-2 m-2 sm:flex-row">
   <div className="flex flex-col items-center justify-center sm:w-[10%]">
    <Link to={`/subject/${data?.subjects[0]?._id}`}> 
    
