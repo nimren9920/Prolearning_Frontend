@@ -12,7 +12,7 @@ const Particulartopics = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/api/topics/${id}`).then(res=>{setdata(res.data.data);console.log(res.data.data);}).catch(err=>console.log(err))
   },[])
   return (
-    <div className={`${isSideNavOpen? 'ml-64': ''}`} >
+    <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
     <div>Title: {data?.name}</div>
     <div>{data?.description}</div>
