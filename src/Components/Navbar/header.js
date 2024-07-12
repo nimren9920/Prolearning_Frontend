@@ -44,7 +44,7 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
       <nav className="bg-[#FF725E] border-solid border-black">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           {!isSideNavOpen && (
-            <button onClick={toggleSideNav} className="fixed top-4 p-4 left-4 z-0 p-2 bg-[#FF725E] text-white rounded-md">
+            <button onClick={toggleSideNav} className="absolute top-4 p-4 left-4 z-0 p-2 bg-[#FF725E] text-white rounded-md">
               <FaAlignJustify />
             </button>
           )}
@@ -64,7 +64,7 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
               </div>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                 <Link to="/dashboard" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Home</Link>
+                 <Link to={`/${data?.role}/dashboard`} className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Home</Link>
                   <Link to="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Profile</Link>
                   <Link to="/logout" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Logout</Link>
                 </div>
@@ -77,7 +77,7 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
       <div className={`fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform ${isSideNavOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
        <div className='flex justify-between p-2 m-4'><h1 className='text-2xl '>Prolearning</h1><button onClick={toggleSideNav} className="p-2 text-black bg-gray-200 rounded-md"><IoMdClose size={20}/></button></div> 
         <div className="p-2">
-         <div className='flex p-2 m-2 gap-2'><div className='p-1'><IoIosHome size={20} color={"red"} /></div><div><Link to={"/dashboard"} className="text-xl text-bold">HOME</Link></div></div> 
+         <div className='flex p-2 m-2 gap-2'><div className='p-1'><IoIosHome size={20} color={"red"} /></div><div><Link to={`/${data?.role}/dashboard`} className="text-xl text-bold">HOME</Link></div></div> 
          <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaBookOpen size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">STUDY MATERIAL</Link></div></div> 
          <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaRegPenToSquare size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">TEST</Link></div></div> 
          <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaPeopleGroup size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">Community</Link></div></div> 

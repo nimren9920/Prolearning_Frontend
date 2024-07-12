@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
-  const data=useSelector(store=>store.user.status)
+  const data=useSelector(store=>store?.user?.status)
+  const role=useSelector(store=>store?.user?.data?.role)
   return (
   <>
   <nav className="bg-[#FF725E] border-solid border-black">
@@ -13,7 +14,7 @@ const Home = () => {
         <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">ProLearning</span>
     </Link>
     <div>
-{  data ?(  <Link to={'/dashboard'}><button className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">Dashboard</button></Link> )
+{  data ?(  <Link to={`/${role}/dashboard`}><button className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">Dashboard</button></Link> )
  : (<div> <Link to={'/login'}><button className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">Login</button></Link> 
      <Link to={'/signup'}> <button className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">Sign Up</button></Link></div>)  }
     </div>
