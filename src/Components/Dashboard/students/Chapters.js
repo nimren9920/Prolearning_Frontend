@@ -20,9 +20,7 @@ const Chapters = () => {
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
    <div className='p-2'>
 
-   {/* {data && data.chapters.map((items)=>{
-      return (<div><Link to={`/chapter/${items._id}`}>{items.name}</Link></div>)
-    })} */}
+
 
 <div class="m-2 font-semibold text-xl flex flex-row ">
   <button className='px-2' onClick={()=>{navigate(-1)}}><IoIosArrowBack color='red' />

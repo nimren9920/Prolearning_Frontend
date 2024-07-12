@@ -18,16 +18,16 @@ const Topics = () => {
   return (
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
-    {/* <div>List of Topics</div>
-    {data && data.topics.map((items)=>{
-      return (<div><Link to={`/topic/${items._id}`}>{items.name}</Link></div>)
-    })} */}
-    <div class="m-2 font-semibold text-xl flex flex-row ">
+ 
+   <div className='p-2'>
+
+
+
+<div class="m-2 font-semibold text-xl flex flex-row ">
   <button className='px-2' onClick={()=>{navigate(-1)}}><IoIosArrowBack color='red' />
   </button>
- 
-  <p>List of Topics:</p>
-  </div>
+  <p>List of Topics</p>
+</div>
 
   
   {data ? (<>  <div class="grid sm:grid-cols-2 md:grid-cols-3 pt-2 m-2 border border-gray-400 rounded-lg shadow-2xl">
@@ -43,7 +43,7 @@ const Topics = () => {
     })}
 
 </div></>):<Loading/>}
-
+</div>
 </div>
     
   )
