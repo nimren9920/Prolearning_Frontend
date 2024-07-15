@@ -18,7 +18,7 @@ const RoleAuth = ({ children, aut = true, role }) => {
     }
 
     setloader(true);
-  }, []);
+  }, [navigate,role,authrole]);
 
   return loader ? <>{children}</> : <Loading />;
 };

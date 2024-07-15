@@ -88,8 +88,11 @@ const routes = createBrowserRouter([
       element:(<RoleAuth aut={true} role={"TEACHER"} ><CreateTopic/></RoleAuth>)
      },]
   },
-
-    
+//http://localhost:8000/UNDEFINED/dashboard
+{
+  path: "/undefined/dashboard",
+  element: <Navigate to="/home" replace />
+},
       {
         path: "*",
         element: <h1>Not Found</h1>,
