@@ -15,7 +15,7 @@ const Particulartopics = () => {
   console.log(data);
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API_URL}/api/topics/${id}`).then(res=>{setdata(res.data.data);console.log(res.data.data);}).catch(err=>console.log(err))
-  },[data,navigate])
+  },[])
   return (
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
@@ -49,7 +49,7 @@ const Particulartopics = () => {
         <h2 className="text-2xl font-semibold mb-2">Related Topic</h2>
         <ul className="list-disc list-inside">
           {data?.RelatedTopic.map((topic) => (
-            <li key={topic._id}><Link to={`/topic/${topic._id}`}>{topic.name}</Link></li>
+            <li key={topic._id}><a href={`/topic/${topic._id}`}>{topic.name}</a></li>
           ))}
         </ul>
       </div>
