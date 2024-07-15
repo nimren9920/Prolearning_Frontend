@@ -39,6 +39,9 @@ const Particulartopics = () => {
         <span className="font-semibold">Chapter:</span> {data?.chapter.name}
       </div>
       <div className="mb-4">
+        <span className="font-semibold">Subject:</span> <Link to={`/subject/${data?.subject?._id}`}>{data?.subject?.name}</Link>
+      </div>
+      <div className="mb-4">
         <span className="font-semibold">Topic Level:</span> {data?.topic_level}
       </div>
       <div className="mb-6">
