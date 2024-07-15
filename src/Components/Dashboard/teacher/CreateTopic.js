@@ -19,16 +19,32 @@ function CreateTopic() {
   const [err ,setErr]=useState()
   const navigate=useNavigate()
  const getSubjects = async (standardId) => {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/${standardId}`);
+    try{
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/${standardId}`);
     if(response.data.data.standards[0]){ return response.data.data.standards[0].subjects;}
     else{
         return [];
     }
+    }
+    catch (error) {
+      console.error('Error fetching subjects:', error);
+      setTimeout(() => {
+        setErr("Something went wrong , try after some time")
+      }, 2000);
+    }
    
   };
  const getChapters = async (subjectId) => {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/${subjectId}`);
+    try{
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/${subjectId}`);
     return response.data.data.chapters;
+    }
+    catch (error) {
+      console.error('Error fetching subjects:', error);
+      setTimeout(() => {
+        setErr("Something went wrong , try after some time")
+      }, 2000);
+    }
   };
   useEffect(() => {
     if (selectedStandard) {
