@@ -35,6 +35,9 @@ const Particulartopics = () => {
 
 {data ? <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
       <h1 className="text-3xl font-bold mb-4">{data?.name}</h1>
+      <div className="mb-4">
+        <span className="font-semibold">Standard:</span> {data?.subject?.standard}
+      </div>
       <div className="mb-4 text-gray-600">
         <span className="font-semibold">Chapter:</span> {data?.chapter.name}
       </div>

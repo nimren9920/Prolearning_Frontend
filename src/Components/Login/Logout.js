@@ -13,7 +13,7 @@ const Logout = () => {
         axios.defaults.withCredentials=true;
 
         axios.post(`${process.env.REACT_APP_API_URL}/api/users/logout`).then(res=>{dispatch(logout());navigate('/home')}).catch(err=>console.log(err))
-    },[dispatch,navigate])
+    },[])
   return (
     <Loading/>
   );
