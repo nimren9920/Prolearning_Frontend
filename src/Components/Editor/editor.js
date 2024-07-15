@@ -40,14 +40,15 @@ const Editor =()=>{
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
    <div className="  min-h-screen mx-auto p-4">
           <div className="md:w-1/2 mx-auto">
-     <div className="flex justify-center "><div className="mb-1">
+     <div className="p-4">
+      <div className="mb-1">
             <label    className="py-2 block text-lg font-medium text-Black">
               Topic Title:
             </label>
             <input
               id="title"
               type="text"
-               className="mt-1 p-2 w-[100vh] border rounded-md bg-slate-100"
+               className="mt-1 p-2 border rounded-md bg-slate-100 w-full"
               ref={title}
             />
           </div></div>
