@@ -6,7 +6,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Header from '../../Navbar/header.js'
-
+import { useNavigate } from 'react-router-dom'
+import { IoIosArrowBack } from "react-icons/io";
 function CreateTopic() {
   const standards = Array.from({ length: 10 }, (_, i) => i + 1); // Fixed standards 1 to 10
   const [subjects, setSubjects] = useState([]);
@@ -16,7 +17,7 @@ function CreateTopic() {
   const [selectedChapter, setSelectedChapter] = useState('');
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [err ,setErr]=useState()
-
+  const navigate=useNavigate()
  const getSubjects = async (standardId) => {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/${standardId}`);
     if(response.data.data.standards[0]){ return response.data.data.standards[0].subjects;}
@@ -56,6 +57,12 @@ function CreateTopic() {
 
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
     <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
+    <div class="m-2 font-semibold text-xl flex flex-row ">
+  <button className='px-2' onClick={()=>{navigate(-1)}}><IoIosArrowBack color='red' />
+  </button>
+  <p></p>
+
+</div>
     <div className="p-4 flex flex-col sm:flex-row gap-2 justify-center items-center w-full">
       <div className="mb-4 w-full sm:w-fit">
         <label className="block text-gray-700">Select Standard</label>

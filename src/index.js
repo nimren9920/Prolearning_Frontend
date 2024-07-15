@@ -20,7 +20,7 @@ import Topics from "./Components/Dashboard/students/topics.js";
 import RoleAuth from "./Components/Auth/roleauth.js";
 import Parents from "./Components/Dashboard/parents/Parents.js";
 import Teacher from "./Components/Dashboard/teacher/Teacher.js";
-import CreateTopic from "./Components/Dashboard/parents/CreateTopic.js"
+import CreateTopic from "./Components/Dashboard/teacher/CreateTopic.js"
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -85,7 +85,7 @@ const routes = createBrowserRouter([
      {
       path:"/create/topic",
 
-      element:(<RoleAuth aut={true} role={"PARENT"} ><CreateTopic/></RoleAuth>)
+      element:(<RoleAuth aut={true} role={"TEACHER"} ><CreateTopic/></RoleAuth>)
      },]
   },
 
