@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
+import Header from '../Navbar/header.js'
 
 import {  useParams } from "react-router-dom";
 import FormikRichText from "./index"
 import axios from "axios";
 const Editor =()=>{
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false)
    const [data,setdata]=useState("")
    const title=useRef("")
    const [err,seterr]=useState()
@@ -34,8 +36,9 @@ const Editor =()=>{
     }
   }
     return <>
-    
-    <div className="  min-h-screen mx-auto p-4">
+    <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
+   <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
+   <div className="  min-h-screen mx-auto p-4">
           <div className="md:w-1/2 mx-auto">
      <div className="flex justify-center "><div className="mb-1">
             <label    className="py-2 block text-lg font-medium text-Black">
@@ -61,6 +64,8 @@ const Editor =()=>{
  </div>
  </div>
  </div>
+   </div>
+
   </>
   
 }
