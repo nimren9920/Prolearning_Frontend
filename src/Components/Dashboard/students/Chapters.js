@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Loading from '../../Loading/Loading'
+import { useSelector } from 'react-redux'
 
 const Chapters = () => {
   const {id}=useParams()
+  const role=useSelector(store=>store.user.data.role)
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
   const navigate=useNavigate()
   const [data,setdata]=useState()
@@ -19,14 +21,17 @@ const Chapters = () => {
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
    <div className='p-2'>
+    
 
 
-
+<div className='flex flex-row justify-between '>
 <div class="m-2 font-semibold text-xl flex flex-row ">
   <button className='px-2' onClick={()=>{navigate(-1)}}><IoIosArrowBack color='red' />
   </button>
  
   <p>Subject</p>
+</div>
+{ role=="TEACHER" && <div><Link to={`/create/subject/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Chapter</button></Link></div>}
 </div>
 
 {/* <div><Link to={`/chapter/${items._id}`}>{items.name}</Link></div> */}

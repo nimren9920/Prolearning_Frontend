@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
 import Loading from '../../Loading/Loading'
+import { useSelector } from 'react-redux'
 const Topics = () => {
   const {id}=useParams()
   const navigate=useNavigate()
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
+  const role=useSelector(store=>store.user.data.role)
 
   const [data,setdata]=useState()
   useEffect(()=>{
@@ -23,10 +25,14 @@ const Topics = () => {
 
 
 
+   <div className='flex flex-row justify-between '>
 <div class="m-2 font-semibold text-xl flex flex-row ">
   <button className='px-2' onClick={()=>{navigate(-1)}}><IoIosArrowBack color='red' />
   </button>
-  <p>List of Topics</p>
+ 
+  <p>List Of Topic</p>
+</div>
+{ role=="TEACHER" && <div><Link to={`/create/topic/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Topic</button></Link></div>}
 </div>
 
   
