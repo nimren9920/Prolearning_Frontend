@@ -21,6 +21,7 @@ import RoleAuth from "./Components/Auth/roleauth.js";
 import Parents from "./Components/Dashboard/parents/Parents.js";
 import Teacher from "./Components/Dashboard/teacher/Teacher.js";
 import CreateTopic from "./Components/Dashboard/teacher/CreateTopic.js"
+import Studeymaterial from "./Components/Dashboard/studymaterial/Studeymaterial.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -92,6 +93,10 @@ const routes = createBrowserRouter([
 {
   path: "/undefined/dashboard",
   element: <Navigate to="/home" replace />
+},
+{
+  path: "/studymaterial",
+  element: <Auth aut={true}><Studeymaterial/></Auth>
 },
       {
         path: "*",
