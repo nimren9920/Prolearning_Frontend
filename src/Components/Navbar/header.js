@@ -79,9 +79,9 @@ const Header = ({isSideNavOpen, setIsSideNavOpen}) => {
         <div className="p-2">
          <div className='flex p-2 m-2 gap-2'><div className='p-1'><IoIosHome size={20} color={"red"} /></div><div><Link to={`/${data?.role}/dashboard`} className="text-xl text-bold">HOME</Link></div></div> 
          <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaBookOpen size={20} color={"red"}/></div><div><Link to={"/studymaterial"} className="text-xl text-bold">STUDY MATERIAL</Link></div></div> 
-         <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaRegPenToSquare size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">TEST</Link></div></div> 
-         <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaPeopleGroup size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">Community</Link></div></div> 
-         <div className='flex p-2 m-2 gap-2'><div className='p-1'><GrDocumentPerformance size={20} color={"red"}/></div><div><Link to={"/"} className="text-xl text-bold">PERFORMANCE</Link></div></div> 
+         <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaRegPenToSquare size={20} color={"red"}/></div><div><Link to={`/${data?.role}/test`} className="text-xl text-bold">TEST</Link></div></div> 
+         <div className='flex p-2 m-2 gap-2'><div className='p-1'><FaPeopleGroup size={20} color={"red"}/></div><div><Link to={`/${data?.role}/community`} className="text-xl text-bold">Community</Link></div></div> 
+         <div className='flex p-2 m-2 gap-2'><div className='p-1'><GrDocumentPerformance size={20} color={"red"}/></div><div><Link to={`/${data?.role}/performance`} className="text-xl text-bold">PERFORMANCE</Link></div></div> 
 
 
 

@@ -22,6 +22,9 @@ import Parents from "./Components/Dashboard/parents/Parents.js";
 import Teacher from "./Components/Dashboard/teacher/Teacher.js";
 import CreateTopic from "./Components/Dashboard/teacher/CreateTopic.js"
 import Studeymaterial from "./Components/Dashboard/studymaterial/Studeymaterial.js";
+import Testhome from "./Components/Dashboard/students/test/Testhome.js";
+import CommunityHome from "./Components/Dashboard/community/communityHome.js";
+import PerformanceHome from "./Components/Dashboard/performance/PerformanceHome.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -82,6 +85,21 @@ const routes = createBrowserRouter([
       path:"/teacher/dashboard",
 
       element:(<RoleAuth aut={true} role={"PARENT"} ><Teacher/></RoleAuth>)
+     },
+     {
+      path:"/student/test",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><Testhome/></RoleAuth>)
+     },
+     {
+      path:"/student/community",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><CommunityHome/></RoleAuth>)
+     },
+     {
+      path:"/student/performance",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><PerformanceHome/></RoleAuth>)
      },
      {
       path:"/create/topic",
