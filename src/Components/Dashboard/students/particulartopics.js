@@ -53,7 +53,7 @@ const Particulartopics = () => {
       <div className="prose mb-6" dangerouslySetInnerHTML={{ __html: data?.description }}></div>
       <div className="mb-6">
         <h2 className="text-2xl font-semibold mb-2">Related Topic</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-inside px-4">
           {data?.RelatedTopic.map((topic) => (
             <li key={topic._id}><a href={`/topic/${topic._id}`}>{topic.name}</a></li>
           ))}
@@ -61,7 +61,7 @@ const Particulartopics = () => {
       </div>
       <div>
         <h2 className="text-2xl font-semibold mb-2">Questions</h2>
-        <ul className="list-disc list-inside">
+        <ul className="list-disc list-inside px-4">
           {data?.questions.map((question) => (
             <li key={question._id}>{question.questionText}</li>
           ))}
