@@ -72,7 +72,7 @@ const Particulartopics = () => {
           : <Loading />}
       </div>
 
-      <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6"><Suggestion topicId={id} /></div>
+     {data && <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6"><Suggestion topicId={id} /></div>}
 
     </div>)
 }
