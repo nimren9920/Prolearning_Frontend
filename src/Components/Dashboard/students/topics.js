@@ -32,7 +32,7 @@ const Topics = () => {
  
   <p>List Of Topic</p>
 </div>
-{ role=="TEACHER" && <div><Link to={`/create/topic/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Topic</button></Link></div>}
+{ role==="TEACHER" && <div><Link to={`/create/topic/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Topic</button></Link></div>}
 </div>
 
   

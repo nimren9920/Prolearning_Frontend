@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 import Loading from '../../Loading/Loading'
+import  Suggestion  from './Suggestion.js'
 const Particulartopics = () => {
   const navigate=useNavigate()
   const {id}=useParams()
@@ -70,6 +71,9 @@ const Particulartopics = () => {
     </div>
 : <Loading/>}
 </div>
+
+<div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6"><Suggestion topicId={id}/></div>
+
     </div>  )
 }
 
