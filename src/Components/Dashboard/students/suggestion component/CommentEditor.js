@@ -29,9 +29,9 @@ const CommentEditor = ({ topicId, refreshComments }) => {
             <ReactQuill value={editorContent} onChange={handleChange} />
             <button 
                 onClick={handleSubmit} 
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                className="mt-4 px-4 py-2 bg-[#FF725E] text-white rounded-xl hover:bg-blue-700"
             >
-                Submit Comment
+                Submit New Content
             </button>
         </div>
     );
