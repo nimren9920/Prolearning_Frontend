@@ -13,9 +13,10 @@ const Suggestion = ({ topicId }) => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">Suggestion</h1>
+            { status &&           <CommentEditor topicId={topicId} refreshComments={refreshComments} />
+} 
             <CommentList topicId={topicId} refreshTrigger={refreshTrigger} />
-{ status &&           <CommentEditor topicId={topicId} refreshComments={refreshComments} />
-}        </div>
+       </div>
     );
 };
 
