@@ -89,6 +89,11 @@ const routes = createBrowserRouter([
      {
       path:"/student/test",
 
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><h1>asdad</h1></RoleAuth>)
+     },
+     {
+      path:"/student/test/:testId",
+
       element:(<RoleAuth aut={true} role={"STUDENT"} ><Testhome/></RoleAuth>)
      },
      {
