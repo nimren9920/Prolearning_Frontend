@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 
 const CommentEditor = ({ topicId, refreshComments }) => {
     const [editorContent, setEditorContent] = useState('');
+    const suggestiontitle=useRef()
 
     const handleChange = (content) => {
         setEditorContent(content);
@@ -13,9 +14,13 @@ const CommentEditor = ({ topicId, refreshComments }) => {
     const handleSubmit = async () => {
         try {
             axios.defaults.withCredentials=true;
+            if(!editorContent || !suggestiontitle.current.value){
+                console.log("All field are required ");
+                return
+            }
 
             await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/createcomment/${topicId}`, {
-                comment: editorContent
+                comment: editorContent ,title:suggestiontitle?.current?.value
             });
             refreshComments();
             setEditorContent('');  // Clear the editor after submitting
@@ -26,6 +31,11 @@ const CommentEditor = ({ topicId, refreshComments }) => {
 
     return (
         <div className="p-4 border rounded-lg shadow-md">
+            <div >
+                <label className='pt-2 '>Suggestion Title </label>
+                    <input className='pt-2 mt-2 pb-2 mb-2 w-full border rounded-sm' type='text' ref={suggestiontitle}/>
+                    
+            </div>
             <ReactQuill value={editorContent} onChange={handleChange} />
             <button 
                 onClick={handleSubmit} 
