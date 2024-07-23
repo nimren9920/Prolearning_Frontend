@@ -16,7 +16,7 @@ const Chapters = () => {
   const [data,setdata]=useState()
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/${id}`).then(res=>{setdata(res.data.data);console.log(res.data.data);}).catch(err=>console.log(err))
-  },[])
+  },[id])
   return (
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
@@ -31,7 +31,7 @@ const Chapters = () => {
  
   <p>Subject</p>
 </div>
-{ role=="TEACHER" && <div><Link to={`/create/subject/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Chapter</button></Link></div>}
+{ role==="TEACHER" && <div><Link to={`/create/subject/${id}`}><button className='m-2 px-4 rounded-xl border border-[#FF725E] hover:scale-1 dealy-700 '>+ Add New Chapter</button></Link></div>}
 </div>
 
 {/* <div><Link to={`/chapter/${items._id}`}>{items.name}</Link></div> */}
