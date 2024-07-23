@@ -25,6 +25,7 @@ import Studeymaterial from "./Components/Dashboard/studymaterial/Studeymaterial.
 import Testhome from "./Components/Dashboard/students/test/Testhome.js";
 import CommunityHome from "./Components/Dashboard/community/communityHome.js";
 import PerformanceHome from "./Components/Dashboard/performance/PerformanceHome.js";
+import { Chaptertest } from "./Components/Dashboard/students/test/Chaptertest.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -87,9 +88,9 @@ const routes = createBrowserRouter([
       element:(<RoleAuth aut={true} role={"PARENT"} ><Teacher/></RoleAuth>)
      },
      {
-      path:"/student/test",
+      path:"/student/chaptertest/:Id",
 
-      element:(<RoleAuth aut={true} role={"STUDENT"} ><h1>asdad</h1></RoleAuth>)
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><Chaptertest/></RoleAuth>)
      },
      {
       path:"/student/test/:testId",

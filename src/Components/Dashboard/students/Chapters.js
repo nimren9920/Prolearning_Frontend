@@ -42,7 +42,7 @@ const Chapters = () => {
         <h1 class="pt-1">{items.name}</h1>
         <div>
         <h1 class="text-orange-600"><IoIosArrowForward color='red'/></h1>
-        <Link to={`/test/${items._id}`}><h1>Test</h1></Link>
+        <Link to={`/student/chaptertest/${items._id}`}><h1>Test</h1></Link>
         </div>
       </div></Link>)
     })}
