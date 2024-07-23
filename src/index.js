@@ -26,6 +26,7 @@ import Testhome from "./Components/Dashboard/students/test/Testhome.js";
 import CommunityHome from "./Components/Dashboard/community/communityHome.js";
 import PerformanceHome from "./Components/Dashboard/performance/PerformanceHome.js";
 import { Chaptertest } from "./Components/Dashboard/students/test/Chaptertest.js";
+import HomeResult from "./Components/Dashboard/students/results/HomeResult.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -107,6 +108,12 @@ const routes = createBrowserRouter([
 
       element:(<RoleAuth aut={true} role={"STUDENT"} ><PerformanceHome/></RoleAuth>)
      },
+     {
+      path:"/student/test/result/:id",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><HomeResult/></RoleAuth>)
+     },
+     
      {
       path:"/create/topic",
 
