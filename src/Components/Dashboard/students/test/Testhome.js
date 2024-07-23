@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import Header from '../../../Navbar/header'
-import TestComponent from './Test'
+import TestComponent from './TestComponent'
 const Testhome = () => {
     const [isSideNavOpen, setIsSideNavOpen] = useState(false)
     return (
