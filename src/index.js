@@ -27,6 +27,7 @@ import CommunityHome from "./Components/Dashboard/community/communityHome.js";
 import PerformanceHome from "./Components/Dashboard/performance/PerformanceHome.js";
 import { Chaptertest } from "./Components/Dashboard/students/test/Chaptertest.js";
 import HomeResult from "./Components/Dashboard/students/results/HomeResult.js";
+import {Stdtest} from "./Components/Dashboard/students/test/Stdtest.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -89,10 +90,17 @@ const routes = createBrowserRouter([
       element:(<RoleAuth aut={true} role={"PARENT"} ><Teacher/></RoleAuth>)
      },
      {
+      path:"/student/test",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><Stdtest/></RoleAuth>)
+     },
+     //this will required sime changes
+     {
       path:"/student/chaptertest/:Id",
 
       element:(<RoleAuth aut={true} role={"STUDENT"} ><Chaptertest/></RoleAuth>)
      },
+     //this will not changes
      {
       path:"/student/test/:testId",
 
