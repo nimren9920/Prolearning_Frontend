@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loading from '../../../Loading/Loading';
 const TestComponent = () => {
   const [test, setTest] = useState(null);
   const [answers, setAnswers] = useState({});
-
+  const navigate=useNavigate()
   const {testId} = useParams();
   const studentId = useSelector(store=>store?.user?.data?._id)
 
@@ -44,6 +44,7 @@ const TestComponent = () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/results`, payload);
       console.log('Test submitted successfully:', response.data);
+      navigate(`/student/test/result/${response.data.data._id}`)
     } catch (error) {
       console.error('Error submitting test:', error);
     }
