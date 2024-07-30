@@ -16,7 +16,7 @@ const Suggestion = ({ topicId }) => {
       {status && (
         <CommentEditor topicId={topicId} refreshComments={refreshComments} />
       )}
-      <CommentList topicId={topicId} refreshTrigger={refreshTrigger} />
+      <CommentList topicId={topicId} refreshTrigger={refreshTrigger} refreshComments={refreshComments} />
     </div>
   );
 };

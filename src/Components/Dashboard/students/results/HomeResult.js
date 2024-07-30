@@ -42,14 +42,14 @@ const HomeResult = () => {
             <p><strong>Score:</strong> {data.score}</p>
           </div>
 
-          <div className="bg-white p-4 rounded-lg shadow-md">
+         {data.recommendations[0] && <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-2">Recommendations</h2>
             <ul className="list-disc pl-5">
               {data.recommendations && data?.recommendations.map((rec, index) => (
                 <Link to={`/topic/${rec.topicId._id}`}> <li key={index}>{rec.topicId.name}</li></Link>
               ))}
             </ul>
-          </div>
+          </div>}
 
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-2">Timestamps</h2>
