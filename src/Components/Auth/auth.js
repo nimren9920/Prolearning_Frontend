@@ -12,8 +12,10 @@ function Auth({ children, aut = true }) {
   useEffect(() => {
     console.log("sttus of if cond", aut && authstate !== aut);
     if (aut && authstate !== aut) {
+      console.log("login home")
       navigate("/login");
     } else if (!aut && authstate !== aut) {
+      console.log(`This home redirec /${authrole}/dashboard`);
       navigate(`/${authrole}/dashboard`);
     }
 
