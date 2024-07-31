@@ -5,7 +5,7 @@ import ReplyEditor from './ReplayEditor.js'; // Ensure the path is correct
 const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
   const [comments, setComments] = useState([]);
   const [replyTo, setReplyTo] = useState(null); // State to track which comment is being replied to
-   // State to manage upvote counts
+                    // State to manage upvote counts
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -29,7 +29,15 @@ const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
 
   const handleUpvote = async (commentId) => {
     axios.defaults.withCredentials = true;
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/upvote`);
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/upvote`);
+    refreshComments()
+    console.log(response);
+  };
+
+  const handleupdatesubcomment=async (commentId) => {
+    axios.defaults.withCredentials = true;
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/subupvote`);
+    refreshComments()
     console.log(response);
   };
 
@@ -52,18 +60,24 @@ const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
         <h2 className="text-2xl">{comment?.title}</h2>
         <div className="text-gray-500 p-2 border-b last:border-none" dangerouslySetInnerHTML={{ __html: comment.topic_comment }} />
         <div className="mt-2 flex items-center">
-          <button
+          {!comment.replies_id && <button
             className="text-blue-500 hover:underline mr-4"
             onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
           >
+            {console.log()}
             Reply
-          </button>
-          <button
-            className="text-green-500 hover:underline flex items-center"
-            onClick={() => handleUpvote(comment._id)}
-          >
-            Upvote ({comment.upvotes.length})
-          </button>
+          </button>}
+{!comment.replies_id ?        <button
+          className="text-green-500 hover:underline flex items-center"
+          onClick={() => handleUpvote(comment._id)}
+        >
+          Upvote ({comment.upvotes.length})
+        </button>:       <button
+          className="text-green-500 hover:underline flex items-center"
+          onClick={() => handleupdatesubcomment(comment._id)}
+        >
+          Upvote ({comment.upvotes.length})
+        </button>}
         </div>
         {replyTo === comment._id && (
           <ReplyEditor
