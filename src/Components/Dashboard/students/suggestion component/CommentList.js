@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReplyEditor from './ReplayEditor.js'; // Ensure the path is correct
 
-const CommentList = ({ topicId, refreshTrigger,refreshComments }) => {
+const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
   const [comments, setComments] = useState([]);
   const [replyTo, setReplyTo] = useState(null); // State to track which comment is being replied to
+   // State to manage upvote counts
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -15,6 +16,9 @@ const CommentList = ({ topicId, refreshTrigger,refreshComments }) => {
           .filter(comment => !comment.parentId) // Only top-level comments
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         setComments(sortedData);
+
+        // Initialize upvotes state
+       
       } catch (error) {
         console.error("There was an error fetching the comments!", error);
       }
@@ -23,9 +27,15 @@ const CommentList = ({ topicId, refreshTrigger,refreshComments }) => {
     fetchComments();
   }, [topicId, refreshTrigger]);
 
+  const handleUpvote = async (commentId) => {
+    axios.defaults.withCredentials = true;
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/upvote`);
+    console.log(response);
+  };
+
   const renderComments = (comments) => {
     return comments.map((comment, index) => (
-      <article className="rounded-lg bg-white p-6 text-base" key={index}>
+      <article className="rounded-lg bg-white p-6 text-base border mb-4" key={index}>
         <footer className="mb-2 flex items-center justify-between">
           <div className="flex items-center">
             <p className="mr-3 inline-flex items-center text-sm font-semibold">
@@ -33,20 +43,28 @@ const CommentList = ({ topicId, refreshTrigger,refreshComments }) => {
               {comment?.createdBy?.fullName}
             </p>
             <p className="text-sm text-gray-600">
-              <time pubdate datetime={comment?.createdAt} title={new Date(comment?.createdAt).toDateString()}>
+              {comment?.createdAt && <time  dateTime={comment?.createdAt} title={new Date(comment?.createdAt).toDateString()}>
                 {new Date(comment?.createdAt).toLocaleDateString()}
-              </time>
+              </time>}
             </p>
           </div>
         </footer>
         <h2 className="text-2xl">{comment?.title}</h2>
         <div className="text-gray-500 p-2 border-b last:border-none" dangerouslySetInnerHTML={{ __html: comment.topic_comment }} />
-        <button
-          className="mt-2 text-blue-500 hover:underline"
-          onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
-        >
-          Reply
-        </button>
+        <div className="mt-2 flex items-center">
+          <button
+            className="text-blue-500 hover:underline mr-4"
+            onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
+          >
+            Reply
+          </button>
+          <button
+            className="text-green-500 hover:underline flex items-center"
+            onClick={() => handleUpvote(comment._id)}
+          >
+            Upvote ({comment.upvotes.length})
+          </button>
+        </div>
         {replyTo === comment._id && (
           <ReplyEditor
             topicId={topicId}

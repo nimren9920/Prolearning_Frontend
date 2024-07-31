@@ -23,7 +23,9 @@ const CommentEditor = ({ topicId, refreshComments }) => {
                 comment: editorContent ,title:suggestiontitle?.current?.value
             });
             refreshComments();
-            setEditorContent('');  // Clear the editor after submitting
+            setEditorContent('');
+            suggestiontitle.current.value=''
+              // Clear the editor after submitting
         } catch (error) {
             console.error("There was an error posting the comment!", error);
         }
