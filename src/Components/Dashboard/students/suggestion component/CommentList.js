@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReplyEditor from './ReplayEditor.js'; // Ensure the path is correct
+import { BsHandThumbsUp,BsHandThumbsUpFill } from "react-icons/bs";
+import { useSelector } from 'react-redux';
 
 const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
   const [comments, setComments] = useState([]);
   const [replyTo, setReplyTo] = useState(null); // State to track which comment is being replied to
                     // State to manage upvote counts
-
+  const userid=useSelector(store=>store.user.data._id)
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -71,12 +73,14 @@ const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
           className="text-green-500 hover:underline flex items-center"
           onClick={() => handleUpvote(comment._id)}
         >
-          Upvote ({comment.upvotes.length})
-        </button>:       <button
+          
+          {comment.upvotes.indexOf(userid)==-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
+          </button>:       <button
           className="text-green-500 hover:underline flex items-center"
           onClick={() => handleupdatesubcomment(comment._id)}
         >
-          Upvote ({comment.upvotes.length})
+          {console.log(comment.upvotes.indexOf(userid))}
+{comment.upvotes.indexOf(userid)==-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
         </button>}
         </div>
         {replyTo === comment._id && (
