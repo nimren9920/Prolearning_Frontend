@@ -1,127 +1,107 @@
-import React, { useMemo, useRef, useState } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ReplyEditor from './ReplayEditor.js'; // Ensure the path is correct
 
-const CommentEditor = ({ topicId, refreshComments }) => {
-    const [editorContent, setEditorContent] = useState('');
-    const [loading, setLoading] = useState(false);
-    const quillRef = useRef();
-    const suggestionTitle = useRef();
+const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
+  const [comments, setComments] = useState([]);
+  const [replyTo, setReplyTo] = useState(null); // State to track which comment is being replied to
+                    // State to manage upvote counts
 
-    const handleChange = (content) => {
-        setEditorContent(content);
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        axios.defaults.withCredentials = true;
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/topics/viewcomment/${topicId}`);
+        const sortedData = response.data.data.reviewdata
+          .filter(comment => !comment.parentId) // Only top-level comments
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setComments(sortedData);
+
+        // Initialize upvotes state
+       
+      } catch (error) {
+        console.error("There was an error fetching the comments!", error);
+      }
     };
 
-    const handleSubmit = async () => {
-        try {
-            axios.defaults.withCredentials = true;
-            if (!editorContent || !suggestionTitle.current.value) {
-                console.log("All fields are required.");
-                return;
-            }
+    fetchComments();
+  }, [topicId, refreshTrigger]);
 
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/createcomment/${topicId}`, {
-                comment: editorContent,
-                title: suggestionTitle?.current?.value
-            });
-            refreshComments();
-            setEditorContent('');
-            suggestionTitle.current.value = '';  // Clear the title input after submitting
-        } catch (error) {
-            console.error("There was an error posting the comment!", error);
-        }
-    };
+  const handleUpvote = async (commentId) => {
+    axios.defaults.withCredentials = true;
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/upvote`);
+    refreshComments()
+    console.log(response);
+  };
 
-    const fileHandler = async (fileType) => {
-        const editor = quillRef.current.getEditor();
-        const input = document.createElement("input");
-        input.setAttribute("type", "file");
-        input.setAttribute("accept", fileType === "image" ? "image/*" : "application/pdf");
-        input.click();
+  const handleupdatesubcomment=async (commentId) => {
+    axios.defaults.withCredentials = true;
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/topics/${commentId}/subupvote`);
+    refreshComments()
+    console.log(response);
+  };
 
-        input.onchange = async () => {
-            const file = input.files[0];
-            if (file) {
-                const isImage = /^image\//.test(file.type);
-                const isPdf = /^application\/pdf$/.test(file.type);
-
-                if (isImage || isPdf) {
-                    setLoading(true);
-                    const formData = new FormData();
-                    formData.append("file", file);
-                    try {
-                        axios.defaults.withCredentials = true;
-                        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/upload/single`, formData);
-                        const url = res.data.data;
-                        const range = editor.getSelection();
-
-                        if (isImage) {
-                            editor.insertText(range.index, "\n");
-                            editor.insertEmbed(range.index + 1, "image", url, "user");
-                            editor.insertText(range.index + 2, "\n");
-                        } else if (isPdf) {
-                            const linkHtml = `<a href="${url}" target="_blank">${file.name}</a>`;
-                            editor.clipboard.dangerouslyPasteHTML(range.index, linkHtml);
-                        }
-                    } catch (error) {
-                        console.error('Error uploading file:', error);
-                    } finally {
-                        setLoading(false);
-                    }
-                } else {
-                    console.log('You can only upload images or PDFs.');
-                }
-            }
-        };
-    };
-
-    const modules = useMemo(() => ({
-        toolbar: {
-            container: [
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', "strike", "link"],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' },
-                { 'indent': '-1' }, { 'indent': '+1' }],
-                [{ 'color': ['#000000', '#e60000', '#ff9900', '#ffff00', '#008a00', '#0066cc', '#9933ff', '#ffffff', '#facccc', '#ffebcc', '#ffffcc', '#cce8cc', '#cce0f5', '#ebd6ff', '#bbbbbb', '#f06666', '#ffc266', '#ffff66', '#66b966', '#66a3e0', '#c285ff', '#888888', '#a10000', '#b26b00', '#b2b200', '#006100', '#0047b2', '#6b24b2', '#444444', '#5c0000', '#663d00', '#666600', '#003700', '#002966', '#3d1466'] }],
-                [{ 'color': [] }, { 'background': [] }],
-                ['formula'],
-                ['image', "video"],
-            ],
-            handlers: {
-                image: () => fileHandler('image'),
-                video: () => fileHandler('pdf')
-            }
-        },
-    }), []);
-
-    return (
-        <div className="p-4 border rounded-lg shadow-md">
-            {loading && (
-                <div id="toast-bottom-right" className="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow right-5 bottom-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
-                    <div className="text-sm font-normal">The file is uploading...</div>
-                </div>
-            )}
-
-            <div>
-                <label className='pt-2'>Suggestion Title</label>
-                <input className='pt-2 px-2 mt-2 pb-2 mb-2 w-full border rounded-sm' type='text' ref={suggestionTitle} />
-            </div>
-            <ReactQuill
-                theme="snow"
-                ref={quillRef}
-                value={editorContent}
-                modules={modules}
-                onChange={handleChange}
-            />
-            <button
-                onClick={handleSubmit}
-                className="mt-4 px-4 py-2 bg-[#FF725E] text-white rounded-xl transition hover:delay-50 hover:scale-105"
-            >
-                Submit New Content
-            </button>
+  const renderComments = (comments) => {
+    return comments.map((comment, index) => (
+      <article className="rounded-lg bg-white p-6 text-base border mb-4" key={index}>
+        <footer className="mb-2 flex items-center justify-between">
+          <div className="flex items-center">
+            <p className="mr-3 inline-flex items-center text-sm font-semibold">
+              <img className="mr-2 h-6 w-6 rounded-full" src={comment?.createdBy?.avatar} alt={comment?.createdBy?.fullName} />
+              {comment?.createdBy?.fullName}
+            </p>
+            <p className="text-sm text-gray-600">
+              {comment?.createdAt && <time  dateTime={comment?.createdAt} title={new Date(comment?.createdAt).toDateString()}>
+                {new Date(comment?.createdAt).toLocaleDateString()}
+              </time>}
+            </p>
+          </div>
+        </footer>
+        <h2 className="text-2xl">{comment?.title}</h2>
+        <div className="text-gray-500 p-2 border-b last:border-none" dangerouslySetInnerHTML={{ __html: comment.topic_comment }} />
+        <div className="mt-2 flex items-center">
+          {!comment.replies_id && <button
+            className="text-blue-500 hover:underline mr-4"
+            onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
+          >
+            {console.log()}
+            Reply
+          </button>}
+{!comment.replies_id ?        <button
+          className="text-green-500 hover:underline flex items-center"
+          onClick={() => handleUpvote(comment._id)}
+        >
+          Upvote ({comment.upvotes.length})
+        </button>:       <button
+          className="text-green-500 hover:underline flex items-center"
+          onClick={() => handleupdatesubcomment(comment._id)}
+        >
+          Upvote ({comment.upvotes.length})
+        </button>}
         </div>
-    );
+        {replyTo === comment._id && (
+          <ReplyEditor
+            topicId={topicId}
+            parentId={comment._id}
+            refreshComments={refreshComments} // Close editor on refresh
+          />
+        )}
+        {comment.replies && comment.replies.length > 0 && (
+          <div className="ml-6 mt-4 border-l-2 pl-4">
+            {renderComments(comment.replies)}
+          </div>
+        )}
+      </article>
+    ));
+  };
+
+  return (
+    <section className="bg-white py-8 antialiased lg:py-16">
+      <div className="mx-auto max-w-2xl px-4">
+        {renderComments(comments)}
+      </div>
+    </section>
+  );
 };
 
-export default CommentEditor;
+export default CommentList;
