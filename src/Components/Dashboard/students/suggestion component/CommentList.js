@@ -3,6 +3,7 @@ import axios from 'axios';
 import ReplyEditor from './ReplayEditor.js'; // Ensure the path is correct
 import { BsHandThumbsUp,BsHandThumbsUpFill } from "react-icons/bs";
 import { useSelector } from 'react-redux';
+import { FaReply } from "react-icons/fa";
 
 const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
   const [comments, setComments] = useState([]);
@@ -67,7 +68,7 @@ const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
             onClick={() => setReplyTo(replyTo === comment._id ? null : comment._id)}
           >
             {console.log()}
-            Reply
+            <FaReply/>
           </button>}
 {!comment.replies_id ?        <button
           className="text-green-500 hover:underline flex items-center"
