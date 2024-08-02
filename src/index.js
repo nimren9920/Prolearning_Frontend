@@ -28,6 +28,9 @@ import PerformanceHome from "./Components/Dashboard/performance/PerformanceHome.
 import { Chaptertest } from "./Components/Dashboard/students/test/Chaptertest.js";
 import HomeResult from "./Components/Dashboard/students/results/HomeResult.js";
 import {Stdtest} from "./Components/Dashboard/students/test/Stdtest.js";
+import TestComponent from "./Components/Dashboard/teacher/create/PTestcreate.js";
+import Chapteradd from "./Components/Dashboard/teacher/create/Chapteradd.js";
+import Createsubject from "./Components/Dashboard/teacher/create/Sujectadd.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -126,7 +129,24 @@ const routes = createBrowserRouter([
       path:"/create/topic",
 
       element:(<RoleAuth aut={true} role={"TEACHER"} ><CreateTopic/></RoleAuth>)
-     },]
+     },
+     {
+      path:"/teacher/create/ptest",
+
+      element:(<RoleAuth aut={true} role={"TEACHER"} ><TestComponent/></RoleAuth>)
+     },
+     {
+      path:"/teacher/create/subject",
+
+      element:(<RoleAuth aut={true} role={"TEACHER"} ><Createsubject/></RoleAuth>)
+     },
+     {
+      path:"/teacher/create/chapter",
+
+      element:(<RoleAuth aut={true} role={"TEACHER"} ><Chapteradd/></RoleAuth>)
+     },
+    
+    ]
   },
 //http://localhost:8000/UNDEFINED/dashboard
 {
