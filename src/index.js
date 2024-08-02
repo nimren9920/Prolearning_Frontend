@@ -31,6 +31,7 @@ import {Stdtest} from "./Components/Dashboard/students/test/Stdtest.js";
 import TestComponent from "./Components/Dashboard/teacher/create/PTestcreate.js";
 import Chapteradd from "./Components/Dashboard/teacher/create/Chapteradd.js";
 import Createsubject from "./Components/Dashboard/teacher/create/Sujectadd.js";
+import { Physicaltest } from "./Components/Dashboard/students/test/physical test/Physicaltest.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -123,6 +124,11 @@ const routes = createBrowserRouter([
       path:"/student/test/result/:id",
 
       element:(<RoleAuth aut={true} role={"STUDENT"} ><HomeResult/></RoleAuth>)
+     },
+     {
+      path:"/student/physical-test",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><Physicaltest/></RoleAuth>)
      },
      
      {

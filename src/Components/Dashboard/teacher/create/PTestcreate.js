@@ -113,9 +113,12 @@ const TestComponent = () => {
         questions: questions.map((q, index) => ({
         question: q.question,
         topicId: q.topicId,
-        score: scores[index] || 0
+        score: scores[index] || 0,
+
       })),
-      score: scores.reduce((acc, score) => acc + score, 0)
+      score: scores.reduce((acc, score) => acc + score, 0),
+      standard:selectedStandard,
+      subject:selectedSubject
     };
     console.log(formattedData);
 
