@@ -48,11 +48,12 @@ const CustomSubject = () => {
           </div>
         ) : (
           <>
+                        <div className="flex flex-col gap-2 p-2 m-2 sm:flex-row" >
+
             {console.log(data.subjects)}
           {data.subjects.map((datas,index)=>{
             return (
-              <div className="flex flex-col gap-2 p-2 m-2 sm:flex-row" key={index}>
-              <div className="flex flex-col items-center justify-center sm:w-[10%]">
+              <div className="flex flex-col items-center justify-center sm:w-[10%]" key={index}>
                 <Link to={`/subject/${datas?._id}`}>
                   <img
                                          src={imageMapping[datas?.name.toLowerCase()] || "https://t4.ftcdn.net/jpg/05/51/43/61/240_F_551436197_pNDNeD5zSx2Sdm4LAHrRPyjSAHsv3M3V.jpg"}
@@ -67,9 +68,10 @@ const CustomSubject = () => {
                   </div>
                 </Link>
               </div>
-            </div>
             )
           })}
+                      </div>
+
           </>
         )
       ) : (
