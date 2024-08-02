@@ -58,10 +58,17 @@ const Chapteradd = () => {
     const data = {
       "name": inputData,
       "subjectId": subjectId,
-      "teacherId": teacherId
+      teacherId
     };
     console.log('Submitted data:', data);
-    setSubmitErr('');
+    axios.defaults.withCredentials = true;
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/api/chapters`, data)
+        .then((res) => {
+          
+          setSubmitErr("chapter created succesfully");
+        })
+        .catch((err) => setSubmitErr("some error chapter created succesfully"));
   };
 
   useEffect(() => {
