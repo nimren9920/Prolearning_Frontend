@@ -118,7 +118,7 @@ const TestComponent = () => {
       })),
       score: scores.reduce((acc, score) => acc + score, 0),
       standard:selectedStandard,
-      subject:selectedSubject
+      subjectid:selectedSubject
     };
     console.log(formattedData);
 
