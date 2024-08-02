@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Header from '../../../Navbar/header';
+import { useSelector } from 'react-redux';
+
 const TestComponent = () => {
   const standards = Array.from({ length: 10 }, (_, i) => i + 1); // Fixed standards 1 to 10
   const [subjects, setSubjects] = useState([]);
@@ -8,9 +10,10 @@ const TestComponent = () => {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [questions, setQuestions] = useState([]);
   const [scores, setScores] = useState([]);
-  const [teacherId, setTeacherId] = useState('');
+  const teacherId = useSelector(store=>store.user.data._id)
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
-
+  const [success,setsuccess]=useState('')
+    const name=useRef('')
 
   const getSubjects = async (standardId) => {
     try {
@@ -105,15 +108,27 @@ const TestComponent = () => {
 
   const handleSubmit = () => {
     const formattedData = {
-      teacherId,
-      questions: questions.map((q, index) => ({
+        teacherId,
+        name:name.current.value,
+        questions: questions.map((q, index) => ({
         question: q.question,
         topicId: q.topicId,
         score: scores[index] || 0
       })),
-      totalScore: scores.reduce((acc, score) => acc + score, 0)
+      score: scores.reduce((acc, score) => acc + score, 0)
     };
     console.log(formattedData);
+
+    axios.defaults.withCredentials = true;
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/physicaltest/physical-tests`,formattedData
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setsuccess('Test Successfully created')
+        // if(res.data.data)
+      }).catch(err=>console.log(err))
   };
 
   return (
@@ -121,7 +136,7 @@ const TestComponent = () => {
      <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
      <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>
      <div className="max-w-xl mx-auto p-5">
-      <h1 className="text-2xl font-bold mb-5">Test</h1>
+      <h1 className="text-2xl font-bold mb-5">Create New Test</h1>
 
       <div className="mb-5">
         <label className="block">Standard:</label>
@@ -161,6 +176,12 @@ const TestComponent = () => {
           </select>
         </div>
       )}
+      { <input
+            type="text"
+            ref={name}
+            placeholder="The test name"
+            className="block w-full mt-2 p-2 border border-gray-300 rounded"
+          />}
 
       {questions.map((q, index) => (
         <div key={index} className="p-5 border-b border-gray-300">
@@ -220,8 +241,10 @@ const TestComponent = () => {
       </button>
 
       <div className="mt-5 p-5 bg-gray-100 rounded">
-        <p className="text-lg font-bold">Total Score: {scores.reduce((acc, score) => acc + score, 0)}</p>
+        <p className="text-lg font-bold">Total Marks: {scores.reduce((acc, score) => acc + score, 0)}</p>
       </div>
+      <p className={`text-green-500 mt-2 ${success ? 'animate-bounce' : ''}`}>{success}</p>
+   
       <button
         className="mt-5 p-2 bg-blue-500 text-white rounded"
         onClick={handleSubmit}

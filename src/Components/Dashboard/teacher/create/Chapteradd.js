@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Header from '../../../Navbar/header';
+import { useSelector } from 'react-redux';
 const Chapteradd = () => {
   // Define the array of values from 1 to 10
   const standards = Array.from({ length: 10 }, (_, index) => index + 1);
@@ -10,7 +11,7 @@ const Chapteradd = () => {
   const [submitErr, setSubmitErr] = useState('');
   const [subjectId, setSubjectId] = useState('');
   const [subjectdata, setSubjectdata] = useState('');
-  const teacherId = "6675373f4fb9256286cc5867";
+  const teacherId = useSelector(store=>store.user.data._id)
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
   const chapterName = useRef('');
 
