@@ -18,7 +18,6 @@ const Createsubject = () => {
     setSelectedValue(value);
     console.log(value); // Print the selected value to the console
   };
-
   const submitdata = () => {
     const inputData = name.current?.value;
 
