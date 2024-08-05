@@ -1,4 +1,4 @@
-import React ,{useState ,useEffect} from 'react'
+import React ,{useState ,useEffect, useRef} from 'react'
 import Header from '../../../../Navbar/header';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -6,7 +6,7 @@ const Physicaltestupload = () => {
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const {id}=useParams()
     const [data,Setdata]=useState('')
-
+    const pdffile=useRef('')
     useEffect(() => {
         function testdata(){
             axios.defaults.withCredentials = true;
@@ -14,6 +14,10 @@ const Physicaltestupload = () => {
         }
         testdata()
     }, [id])
+
+    function submittest() {
+        console.log(pdffile.current.file[0]);
+    }
     
   return (
     <>
@@ -148,13 +152,14 @@ const Physicaltestupload = () => {
     </div>
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <input
+        <input ref={pdffile}
+       // value={pdffile}
           class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
           type="file"
           id="pdf-upload"
         />
       </div>
-      <button class="justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex items-center gap-2">
+      <button onClick={submittest} class="justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
