@@ -2,11 +2,13 @@ import React ,{useState ,useEffect, useRef} from 'react'
 import Header from '../../../../Navbar/header';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 const Physicaltestupload = () => {
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const {id}=useParams()
     const [data,Setdata]=useState('')
-    const pdffile=useRef('')
+  const [pdffile,setpdffile]=useState('')
+    const stdid=useSelector(store=>store.user.data._id)
     useEffect(() => {
         function testdata(){
             axios.defaults.withCredentials = true;
@@ -16,7 +18,20 @@ const Physicaltestupload = () => {
     }, [id])
 
     function submittest() {
-        console.log(pdffile.current.file[0]);
+       
+        if(!pdffile){
+          return;
+        }
+    else{
+      const body={
+        studentId:stdid,
+        teacherId:data._id,
+        testId:id,
+        pdf:pdffile
+      }
+      console.log(body);
+    }
+        
     }
     
   return (
@@ -152,8 +167,12 @@ const Physicaltestupload = () => {
     </div>
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <input ref={pdffile}
+        <input 
+        //ref={pdffile}
        // value={pdffile}
+       onChange={(e)=>{
+        setpdffile(e.target.files[0])
+       }}
           class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-full"
           type="file"
           id="pdf-upload"
