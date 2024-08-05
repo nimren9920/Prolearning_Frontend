@@ -11,8 +11,8 @@ export const Physicaltest = () => {
   const navigate = useNavigate();
   
   const data = useSelector(store => store.user.data);
- // const Id = parseInt(data.standard);
-const Id=6;
+ const Id = parseInt(data.standard);
+//const Id=6;
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState('');
   const [test, setTest] = useState(null);
@@ -83,7 +83,7 @@ const Id=6;
           {
             
             test ? test.map((data, index) => (
-              <Link key={index} to={`/student/test/${data?._id}`}>
+              <Link key={index} to={`/student/physical-test/${data?._id}`}>
                 <div className="flex justify-between p-2 m-2 border rounded-lg shadow-2xl">
                   <h1 className="pt-1">{data?.name}</h1>
                 </div>
