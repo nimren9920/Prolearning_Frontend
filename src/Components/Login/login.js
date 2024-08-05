@@ -15,6 +15,11 @@ const Login = () => {
   function log() {
     setErr();
     setloggin(true);
+    if(!email.current.value || !password.current.value ){
+      setloggin(false);
+      setErr("All Field are Required")
+      return
+    }
     const body = {
       email: email.current.value,
       // "username": email.current.value,
@@ -40,64 +45,54 @@ const Login = () => {
           setErr("Some Other Error");
         }
         setloggin(false);
-        // setTimeout(() => {
-        //   setErr()
-        // }, 2000);
+        setTimeout(() => {
+          setErr()
+        }, 4000);
       });
   }
   return (
     <>
-      <div className="bg-blue-400 h-screen w-screen">
-        <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-          <div
-            className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0"
-            style={{ height: "500px" }}
-          >
-            <div
-              className="hidden md:block md:w-1/2 rounded-r-lg"
-              style={{
-                backgroundImage:
-                  "url('https://img.freepik.com/free-vector/kids-studying-from-home-concept-illustration_114360-1762.jpg?t=st=1719916369~exp=1719919969~hmac=894a8f71cdea6ebe22bb1282973ceffdc18722eb82717b55f3a0c41fbcc28d56&w=740')",
-                backgroundSize: "cover",
-                backgroundPosition: "center center",
-              }}
-            ></div>
-            <div className="flex flex-col w-full md:w-1/2 p-4">
-              <div className="flex flex-col flex-1 justify-center mb-">
-                <h1 className="text-4xl text-center font-light">Login</h1>
-                <div className="w-full mt-4">
+     <div className="grid min-h-screen w-full grid-cols-1 lg:grid-cols-2">
+
+              <div className="hidden lg:block">
+    <img src="https://img.freepik.com/free-vector/kids-studying-from-home-concept-illustration_114360-1762.jpg?t=st=1719916369~exp=1719919969~hmac=894a8f71cdea6ebe22bb1282973ceffdc18722eb82717b55f3a0c41fbcc28d56&w=740" alt="Illustration" width="800" height="800" className="h-full w-full object-cover" />
+  </div>
+  <div className="bg-background flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-md space-y-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-foreground text-3xl font-bold tracking-tight">Welcome to the ProLearning</h1>
+        <p className="text-muted-foreground">Sign in to access your resources and information.</p>
+      </div>
+         
                   <form
-                    className="form-horizontal w-3/4 mx-auto"
+                    className="space-y-4 gap-2"
                     onClick={(e) => e.preventDefault()}
                   >
-                    <div className="flex flex-col mt-4">
+                    <div >
+                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="email"> Email / Username </label>
                       <input
-                        id="email"
                         ref={email}
-                        type="email"
-                        className="flex-grow h-8 px-2 border rounded border-grey-400"
-                        name="email"
-                        placeholder="Email"
+                       className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" id="email" placeholder="Enter your email or username" required="" type="text"
                       />
                     </div>
-                    <div className="flex flex-col mt-4">
+                    <div >
+                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="Passowrd"> Passowrd </label>
+
                       <input
                         id="password"
                         ref={password}
                         type="password"
-                        className="flex-grow h-8 px-2 rounded border border-grey-400"
+                        className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         name="password"
                         required
-                        placeholder="Password"
+                        placeholder="Enter a Password"
                       />
                     </div>
-                    {/* <div className="flex items-center mt-4">
-                                <input type="checkbox" name="remember" id="remember" className="mr-2"> <label for="remember" className="text-sm text-grey-dark"/>Remember Me</label>
-                            </div> */}
+           
                     <div className="flex flex-col mt-8 ">
                       <button
                         onClick={log}
-                        className="cursor-pointer flex w-full justify-center items-center rounded-md bg-blue-500 hover:bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="cursor-pointer flex w-full justify-center items-center rounded-md bg-[#FF726E] hover:bg-[#FF728E] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         {isLogging ? (
                           <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
@@ -107,12 +102,11 @@ const Login = () => {
                       </button>
                     </div>
                     {err && (
-                      <div className=" flex flex-col mt-4">
-                        {" "}
-                        <p className="py-2 px-4 bg-gray-200 text-red-500">
+                     
+                        <div className="text-red-500 font-medium">
                           {err}
-                        </p>
-                      </div>
+                        </div>
+                     
                     )}
                   </form>
 
@@ -126,35 +120,11 @@ const Login = () => {
                     </Link>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* 
-
-<form onClick={e=>e.preventDefault()}>
-  <input ref={email} type='text'  placeholder='Email id'/>
-  <input ref={password} type='text' placeholder='password'/>
-  <button onClick={log}>login</button>
-  <p>New to Prolearning ?<Link to={'/Signup'}>Sign Up</Link></p>
-</form>
-
-
-<div class="pt-10 flex justify-between items-center">
- <div>
- 
-   <div class="flex justify-center text-xl font-bold"><h1>Login</h1></div>
-   
-  <form class="m-2 flex flex-col px-2">
-  <label > Email ID: <input class="m-4 p-1 border rounded-xl border-solid border-black" placeholder="Enter your email " /></label>
-  <label > Password: <input class="m-2 p-1 border rounded-xl border-solid border-black" placeholder="Enter Password" /></label>
-<br/>
- 
-  <button class="flex justify-center w-20 ml-28 mt-4 bg-grey border rounded-xl border-solid border-black p-1">Login</button>
-</form>
- </div>
-</div> */}
+                </div>      </div>
+                
+              
+       
+     
     </>
   );
 };

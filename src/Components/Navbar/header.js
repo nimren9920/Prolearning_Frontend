@@ -13,7 +13,6 @@ import { FaRegPenToSquare } from "react-icons/fa6";
 const Header = ({ isSideNavOpen, setIsSideNavOpen }) => {
   const data = useSelector((store) => store.user.data);
 
-  // const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -40,55 +39,52 @@ const Header = ({ isSideNavOpen, setIsSideNavOpen }) => {
 
   return (
     <>
-      <nav className="bg-[#FF725E] border-solid border-black">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          {!isSideNavOpen && (
+      <nav className="bg-[#FF725E] border-b border-black">
+        <div className="max-w-screen-2xl flex items-center justify-between mx-auto p-4">
+   <div className="flex flex-row ">
+   {!isSideNavOpen && (
             <button
               onClick={toggleSideNav}
-              className="absolute top-4 p-4 left-4 z-0 p-2 bg-[#FF725E] text-white rounded-md"
+              className="p-2 bg-[#FF725E] text-white rounded-full focus:outline-none"
             >
               <FaAlignJustify />
             </button>
           )}
-
-          <div className="mx-2 sm:mx-8 w-2 sm:w-fit invisible sm:visible">
-            <Link className="flex items-center space-x-3 rtl:space-x-reverse">
-              <span className="self-center text-2xl font-semibold whitespace-nowrap text-white z-0 ">
-                HI! {data?.fullName}
-              </span>
-            </Link>
+          <div className="flex items-center space-x-3">
+            <span className="text-2xl font-semibold text-white">
+              HI! {data?.fullName}
+            </span>
           </div>
-          <div className="flex flex-row items-center">
-            <div className="border-2 border-black w-fit font-medium bg-[#FF725E] rounded-md p-2 hover:bg-[#f1bb87] transition-all hover:rounded-3xl text-white">
-              {data?.role}
-            </div>
-            <div className="relative mx-2" ref={dropdownRef}>
-              <div onClick={toggleDropdown}>
-                <Avatar />
+   </div>
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={toggleDropdown}
+              className="inline-flex items-center justify-center rounded-full focus:outline-none"
+            >
+              <Avatar />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                <Link
+                  to={`/${data?.role}/dashboard`}
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >
+                  Profile
+                </Link>
+                <Link
+                  to="/logout"
+                  className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+                >
+                  Logout
+                </Link>
               </div>
-              {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                  <Link
-                    to={`/${data?.role}/dashboard`}
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/logout"
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                  >
-                    Logout
-                  </Link>
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </nav>
@@ -98,100 +94,66 @@ const Header = ({ isSideNavOpen, setIsSideNavOpen }) => {
           isSideNavOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex justify-between p-2 m-4">
-          <h1 className="text-2xl ">Prolearning</h1>
+        <div className="flex justify-between items-center p-4 border-b">
+          <h1 className="text-2xl font-bold">Prolearning</h1>
           <button
             onClick={toggleSideNav}
-            className="p-2 text-black bg-gray-200 rounded-md"
+            className="p-2 text-black bg-gray-200 rounded-full"
           >
             <IoMdClose size={20} />
           </button>
         </div>
-        <div className="p-2">
-          <div className="flex p-2 m-2 gap-2">
-            <div className="p-1">
-              <IoIosHome size={20} color={"red"} />
-            </div>
-            <div>
-              <Link
-                to={`/${data?.role}/dashboard`}
-                className="text-xl text-bold"
-              >
-                HOME
-              </Link>
-            </div>
-          </div>
+        <div className="flex flex-col p-4 space-y-2">
+          <Link
+            to={`/${data?.role}/dashboard`}
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+          >
+            <IoIosHome size={20} className="text-red-500" />
+            <span className="text-sm font-medium">Home</span>
+          </Link>
           {data?.role !== "PARENT" && (
-            <div className="flex p-2 m-2 gap-2">
-              <div className="p-1">
-                <FaBookOpen size={20} color={"red"} />
-              </div>
-              <div>
-                <Link to={"/studymaterial"} className="text-xl text-bold">
-                  STUDY MATERIAL
-                </Link>
-              </div>
-            </div>
+            <Link
+              to="/studymaterial"
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+            >
+              <FaBookOpen size={20} className="text-red-500" />
+              <span className="text-sm font-medium">Study Material</span>
+            </Link>
           )}
-          <div className="flex p-2 m-2 gap-2">
-            <div className="p-1">
-              <FaRegPenToSquare size={20} color={"red"} />
-            </div>
-            <div>
-              <Link to={`/${data?.role}/test`} className="text-xl text-bold">
-                MCQ TEST
-              </Link>
-            </div>
-          </div>
-          
+          <Link
+            to={`/${data?.role}/test`}
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+          >
+            <FaRegPenToSquare size={20} className="text-red-500" />
+            <span className="text-sm font-medium">MCQ Test</span>
+          </Link>
           {data?.role !== "PARENT" && (
-            <div className="flex p-2 m-2 gap-2">
-              <div className="p-1">
-                <FaRegPenToSquare size={20} color={"red"} />
-              </div>
-              <div>
-                <Link
-                  to={`/${data?.role}/physical-test`}
-                  className="text-xl text-bold"
-                >
-                  Physical Test
-                </Link>
-              </div>
-            </div>
+            <Link
+              to={`/${data?.role}/physical-test`}
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+            >
+              <FaRegPenToSquare size={20} className="text-red-500" />
+              <span className="text-sm font-medium">Physical Test</span>
+            </Link>
           )}
-
           {data?.role !== "PARENT" && (
-            <div className="flex p-2 m-2 gap-2">
-              <div className="p-1">
-                <FaPeopleGroup size={20} color={"red"} />
-              </div>
-              <div>
-                <Link
-                  to={`/${data?.role}/community`}
-                  className="text-xl text-bold"
-                >
-                  Community
-                </Link>
-              </div>
-            </div>
+            <Link
+              to={`/${data?.role}/community`}
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+            >
+              <FaPeopleGroup size={20} className="text-red-500" />
+              <span className="text-sm font-medium">Community</span>
+            </Link>
           )}
           {data?.role !== "TEACHER" && (
-            <div className="flex p-2 m-2 gap-2">
-              <div className="p-1">
-                <GrDocumentPerformance size={20} color={"red"} />
-              </div>
-              <div>
-                <Link
-                  to={`/${data?.role}/performance`}
-                  className="text-xl text-bold"
-                >
-                  PERFORMANCE
-                </Link>
-              </div>
-            </div>
+            <Link
+              to={`/${data?.role}/performance`}
+              className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+            >
+              <GrDocumentPerformance size={20} className="text-red-500" />
+              <span className="text-sm font-medium">Performance</span>
+            </Link>
           )}
-
-          {/* Add more links as needed */}
         </div>
       </div>
     </>
