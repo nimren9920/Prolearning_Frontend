@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-
+import { IoClose } from "react-icons/io5";
+import { TiTick } from "react-icons/ti";
+import Header from '../../../Navbar/header';
 const TestCheck = () => {
   const [data, setData] = useState(null);
   const [responses, setResponses] = useState({});
   const [feedback, setFeedback] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
   useEffect(() => {
     // Simulate fetching data
@@ -132,7 +135,9 @@ const TestCheck = () => {
   const { test, pdfPath, grade } = data;
 
   return (
-    <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+    <div className={`${isSideNavOpen ? 'sm:ml-64' : ''}`}>
+          <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} />
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="flex-1">
         <div className="h-[600px] bg-muted rounded-lg overflow-hidden">
           <iframe src={pdfPath} title="Test PDF" className="w-full h-full"></iframe>
@@ -159,13 +164,13 @@ const TestCheck = () => {
                     onClick={() => handleMarkAsRight(question._id)}
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-green-500 hover:bg-green-600 text-white w-8 h-8"
                   >
-                    Right
+                    <TiTick/>
                   </button>
                   <button
                     onClick={() => handleMarkAsWrong(question._id)}
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-red-500 hover:bg-red-600 text-white w-8 h-8"
                   >
-                    Wrong
+                    <IoClose/>
                   </button>
                 </div>
               </div>
@@ -192,6 +197,7 @@ const TestCheck = () => {
         </div>
       </div>
     </div>
+ </div>
   );
 };
 
