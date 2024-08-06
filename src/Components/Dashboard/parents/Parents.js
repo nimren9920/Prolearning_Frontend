@@ -1,6 +1,5 @@
 import React ,{ useState } from 'react'
 import Header from '../../Navbar/header.js'
-import { Link } from 'react-router-dom'
 
 const Parents = () => {
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
