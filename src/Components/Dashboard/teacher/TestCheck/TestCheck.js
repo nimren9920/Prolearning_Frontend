@@ -2,12 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoClose } from "react-icons/io5";
 import { TiTick } from "react-icons/ti";
 import Header from '../../../Navbar/header';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Loading from '../../../Loading/Loading';
-
 const TestCheck = () => {
-  const {id}=useParams()
   const [data, setData] = useState(null);
   const [responses, setResponses] = useState({});
   const [feedback, setFeedback] = useState('');
@@ -17,70 +12,67 @@ const TestCheck = () => {
 
   useEffect(() => {
     // Simulate fetching data
-   
     const fetchData = async () => {
-      // const response = {
-      //   "statusCode": 200,
-      //   "data": {
-      //     "_id": "667a6e9ff32db31fd377c42a",
-      //     "student": {
-      //       "_id": "667537a74fb9256286cc586e",
-      //       "fullName": "TestStudent"
-      //     },
-      //     "teacher": {
-      //       "_id": "6675373f4fb9256286cc5867",
-      //       "fullName": "Test Teacher"
-      //     },
-      //     "test": {
-      //       "_id": "66ad0d601ca3576e87da43ec",
-      //       "name": "The First Science Test",
-      //       "teacher": {
-      //         "_id": "6675373f4fb9256286cc5867",
-      //         "fullName": "Test Teacher"
-      //       },
-      //       "standard": 10,
-      //       "subject": "Science",
-      //       "questions": [
-      //         {
-      //           "question": "What is Newton First Law with formulas?",
-      //           "topicId": "66ad0d321ca3576e87da43de",
-      //           "score": 2,
-      //           "_id": "66ad0d601ca3576e87da43ed"
-      //         },
-      //         {
-      //           "question": "What is Newtoasdn First Law with formulas?",
-      //           "topicId": "66ad0d32asd1ca3576e87da43de",
-      //           "score": 3,
-      //           "_id": "66ad0d601casda3576e87da43ed"
-      //         }
-      //         // Add more questions here
-      //       ],
-      //       "score": 2,
-      //       "createdAt": "2024-08-02T16:46:24.263Z",
-      //       "updatedAt": "2024-08-02T16:46:24.263Z",
-      //       "__v": 0
-      //     },
-      //     "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1719299743/vp7vbe8q6uihkn1eizyi.pdf",
-      //     "grade": "B+",
-      //     "feedback": "Improve the specific topic",
-      //     "createdAt": "2024-06-25T07:15:43.792Z",
-      //     "updatedAt": "2024-08-05T17:12:22.796Z",
-      //     "__v": 0
-      //   },
-      //   "message": "Answer copy fetched successfully",
-      //   "success": true
-      // };
-      axios.defaults.withCredentials = true;
-      axios.get(`${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/${id}`).then(res=>setData(res.data.data)).catch(err=>console.log(err))
+      const response = {
+        "statusCode": 200,
+        "data": {
+          "_id": "667a6e9ff32db31fd377c42a",
+          "student": {
+            "_id": "667537a74fb9256286cc586e",
+            "fullName": "TestStudent"
+          },
+          "teacher": {
+            "_id": "6675373f4fb9256286cc5867",
+            "fullName": "Test Teacher"
+          },
+          "test": {
+            "_id": "66ad0d601ca3576e87da43ec",
+            "name": "The First Science Test",
+            "teacher": {
+              "_id": "6675373f4fb9256286cc5867",
+              "fullName": "Test Teacher"
+            },
+            "standard": 10,
+            "subject": "Science",
+            "questions": [
+              {
+                "question": "What is Newton First Law with formulas?",
+                "topicId": "66ad0d321ca3576e87da43de",
+                "score": 2,
+                "_id": "66ad0d601ca3576e87da43ed"
+              },
+              {
+                "question": "What is Newtoasdn First Law with formulas?",
+                "topicId": "66ad0d32asd1ca3576e87da43de",
+                "score": 3,
+                "_id": "66ad0d601casda3576e87da43ed"
+              }
+              // Add more questions here
+            ],
+            "score": 2,
+            "createdAt": "2024-08-02T16:46:24.263Z",
+            "updatedAt": "2024-08-02T16:46:24.263Z",
+            "__v": 0
+          },
+          "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1719299743/vp7vbe8q6uihkn1eizyi.pdf",
+          "grade": "B+",
+          "feedback": "Improve the specific topic",
+          "createdAt": "2024-06-25T07:15:43.792Z",
+          "updatedAt": "2024-08-05T17:12:22.796Z",
+          "__v": 0
+        },
+        "message": "Answer copy fetched successfully",
+        "success": true
+      };
 
-      //setData(response.data);
+      setData(response.data);
     };
 
     fetchData();
   }, []);
 
   const handleScoreChange = (questionId, value) => {
-    const question = data.data.test.questions.find(q => q._id === questionId);
+    const question = data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: Math.max(0, Math.min(value, question.score))
@@ -88,7 +80,7 @@ const TestCheck = () => {
   };
 
   const handleMarkAsRight = (questionId) => {
-    const question = data.data.test.questions.find(q => q._id === questionId);
+    const question = data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: question.score
@@ -99,7 +91,7 @@ const TestCheck = () => {
   };
 
   const handleMarkAsWrong = (questionId) => {
-    const question = data.data.test.questions.find(q => q._id === questionId);
+    const question = data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: 0
@@ -117,7 +109,7 @@ const TestCheck = () => {
   const handleSubmit = () => {
     let newTotalScore = 0;
     
-    data.data.test.questions.forEach(question => {
+    data.test.questions.forEach(question => {
       const userScore = responses[question._id] || 0;
       if (userScore === question.score) {
         newTotalScore += question.score;
@@ -136,23 +128,26 @@ const TestCheck = () => {
     console.log(body);
   };
 
+  if (!data) {
+    return <div>Loading...</div>;
+  }
 
-  
+  const { test, pdfPath, grade } = data;
 
   return (
+
     <div className={`${isSideNavOpen ? 'sm:ml-64' : ''}`}>
-          <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} />
-         {data ? <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+      <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} /> <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="flex-1">
         <div className="h-[600px] bg-muted rounded-lg overflow-hidden">
-          <iframe src={data.pdfPath} title="Test PDF" className="w-full h-full"></iframe>
+          <iframe src={pdfPath} title="Test PDF" className="w-full h-full"></iframe>
         </div>
       </div>
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Assessment Questions for {data.test.name}</h2>
+          <h2 className="text-2xl font-bold">Assessment Questions for {test.name}</h2>
           <div className="grid gap-4">
-            {data.test.questions.map((question) => (
+            {test.questions.map((question) => (
               <div key={question._id} className="grid grid-cols-[1fr_80px_80px] items-center gap-4">
                 <p>{question.question}</p>
                 <input
@@ -182,7 +177,7 @@ const TestCheck = () => {
             ))}
           </div>
           <div className="mt-4">
-            <div className="text-lg font-semibold">Grade: {data.grade}</div>
+            <div className="text-lg font-semibold">Grade: {grade}</div>
             <div className="text-md mt-2">
               Feedback:
               <textarea
@@ -201,8 +196,8 @@ const TestCheck = () => {
           </button>
         </div>
       </div>
-    </div> :<Loading/>}
- </div>
+    </div></div>
+   
   );
 };
 
