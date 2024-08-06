@@ -149,7 +149,12 @@ const routes = createBrowserRouter([
       element:(<RoleAuth aut={true} role={"TEACHER"} ><TestComponent/></RoleAuth>)
      },
      {
-      path:"/teacher/check/ptest",
+      path:"/teacher/check/ptest/:id",
+
+      element:(<RoleAuth aut={true} role={"TEACHER"} ><TestCheck/></RoleAuth>)
+     },
+     {
+      path:"/teacher/check/ptest/:id",
 
       element:(<RoleAuth aut={true} role={"TEACHER"} ><TestCheck/></RoleAuth>)
      },

@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { IoClose } from "react-icons/io5";
 import { TiTick } from "react-icons/ti";
 import Header from '../../../Navbar/header';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 const TestCheck = () => {
+  const {id}=useParams()
   const [data, setData] = useState(null);
   const [responses, setResponses] = useState({});
   const [feedback, setFeedback] = useState('');
@@ -12,60 +15,63 @@ const TestCheck = () => {
 
   useEffect(() => {
     // Simulate fetching data
+   
     const fetchData = async () => {
-      const response = {
-        "statusCode": 200,
-        "data": {
-          "_id": "667a6e9ff32db31fd377c42a",
-          "student": {
-            "_id": "667537a74fb9256286cc586e",
-            "fullName": "TestStudent"
-          },
-          "teacher": {
-            "_id": "6675373f4fb9256286cc5867",
-            "fullName": "Test Teacher"
-          },
-          "test": {
-            "_id": "66ad0d601ca3576e87da43ec",
-            "name": "The First Science Test",
-            "teacher": {
-              "_id": "6675373f4fb9256286cc5867",
-              "fullName": "Test Teacher"
-            },
-            "standard": 10,
-            "subject": "Science",
-            "questions": [
-              {
-                "question": "What is Newton First Law with formulas?",
-                "topicId": "66ad0d321ca3576e87da43de",
-                "score": 2,
-                "_id": "66ad0d601ca3576e87da43ed"
-              },
-              {
-                "question": "What is Newtoasdn First Law with formulas?",
-                "topicId": "66ad0d32asd1ca3576e87da43de",
-                "score": 3,
-                "_id": "66ad0d601casda3576e87da43ed"
-              }
-              // Add more questions here
-            ],
-            "score": 2,
-            "createdAt": "2024-08-02T16:46:24.263Z",
-            "updatedAt": "2024-08-02T16:46:24.263Z",
-            "__v": 0
-          },
-          "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1719299743/vp7vbe8q6uihkn1eizyi.pdf",
-          "grade": "B+",
-          "feedback": "Improve the specific topic",
-          "createdAt": "2024-06-25T07:15:43.792Z",
-          "updatedAt": "2024-08-05T17:12:22.796Z",
-          "__v": 0
-        },
-        "message": "Answer copy fetched successfully",
-        "success": true
-      };
+      // const response = {
+      //   "statusCode": 200,
+      //   "data": {
+      //     "_id": "667a6e9ff32db31fd377c42a",
+      //     "student": {
+      //       "_id": "667537a74fb9256286cc586e",
+      //       "fullName": "TestStudent"
+      //     },
+      //     "teacher": {
+      //       "_id": "6675373f4fb9256286cc5867",
+      //       "fullName": "Test Teacher"
+      //     },
+      //     "test": {
+      //       "_id": "66ad0d601ca3576e87da43ec",
+      //       "name": "The First Science Test",
+      //       "teacher": {
+      //         "_id": "6675373f4fb9256286cc5867",
+      //         "fullName": "Test Teacher"
+      //       },
+      //       "standard": 10,
+      //       "subject": "Science",
+      //       "questions": [
+      //         {
+      //           "question": "What is Newton First Law with formulas?",
+      //           "topicId": "66ad0d321ca3576e87da43de",
+      //           "score": 2,
+      //           "_id": "66ad0d601ca3576e87da43ed"
+      //         },
+      //         {
+      //           "question": "What is Newtoasdn First Law with formulas?",
+      //           "topicId": "66ad0d32asd1ca3576e87da43de",
+      //           "score": 3,
+      //           "_id": "66ad0d601casda3576e87da43ed"
+      //         }
+      //         // Add more questions here
+      //       ],
+      //       "score": 2,
+      //       "createdAt": "2024-08-02T16:46:24.263Z",
+      //       "updatedAt": "2024-08-02T16:46:24.263Z",
+      //       "__v": 0
+      //     },
+      //     "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1719299743/vp7vbe8q6uihkn1eizyi.pdf",
+      //     "grade": "B+",
+      //     "feedback": "Improve the specific topic",
+      //     "createdAt": "2024-06-25T07:15:43.792Z",
+      //     "updatedAt": "2024-08-05T17:12:22.796Z",
+      //     "__v": 0
+      //   },
+      //   "message": "Answer copy fetched successfully",
+      //   "success": true
+      // };
+      axios.defaults.withCredentials = true;
+      axios.get(`${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/${id}`).then(res=>setData(res.data.data)).catch(err=>console.log(err))
 
-      setData(response.data);
+      //setData(response.data);
     };
 
     fetchData();
