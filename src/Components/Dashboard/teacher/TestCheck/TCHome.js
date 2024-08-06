@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Header from '../../../Navbar/header';
 import { Link } from 'react-router-dom';
 
 export const TCHome = () => {
   const [data, setData] = useState([]);
-  const id = 10; // Adjust this if needed
+  const [id, setId] = useState(10); // Default ID, adjust as needed
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -16,7 +15,7 @@ export const TCHome = () => {
       .get(`${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/standard/${id}`)
       .then(res => setData(res.data.data))
       .catch(err => console.log(err));
-  }, [id]);
+  }, [id]); // Fetch data whenever the `id` changes
 
   const filteredData = data.filter(item =>
     item.student.fullName?.toLowerCase().includes(searchTerm?.toLowerCase())
@@ -27,7 +26,23 @@ export const TCHome = () => {
       <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} />
       <div className="flex flex-col h-full">
         <header className="bg-background border-b px-6 py-4 flex items-center justify-between">
+          
           <h1 className="text-2xl font-bold">Test Submissions 🎉</h1>
+          <div className="mb-4 flex flex-row justify-between">
+              <label htmlFor="id-select" className="block text-sm font-medium text-muted-foreground">Select Standards</label>
+              <select
+                id="id-select"
+                value={id}
+                onChange={e => setId(parseInt(e.target.value, 10))}
+                className="mt-1 block w-full border border-input px-3 py-2 text-sm rounded-md bg-muted focus:outline-none focus:ring-1 focus:ring-primary"
+              >
+                {Array.from({ length: 10 }, (_, index) => index + 1).map(num => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                ))}
+              </select>
+            </div>
           <div className="relative">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +70,7 @@ export const TCHome = () => {
         </header>
         <main className="flex-1 overflow-auto p-6">
           <div className="relative w-full overflow-auto">
+           
             <table className="w-full caption-bottom text-sm">
               <thead className="[&amp;_tr]:border-b">
                 <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -79,8 +95,6 @@ export const TCHome = () => {
                 </tr>
               </thead>
               <tbody className="[&amp;_tr:last-child]:border-0">
-                {console.log(filteredData)
-                }
                 {filteredData.map(item => (
                   <tr key={item._id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
@@ -90,10 +104,10 @@ export const TCHome = () => {
                       {item.test.name}
                     </td>
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
-                      {item.score ? item.score : "Not Check Yet" }
+                      {item.score ? item.score : "Not Checked Yet"}
                     </td>
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
-                      {item.grade ? item.grade : "Not Check Yet" }
+                      {item.grade ? item.grade : "Not Checked Yet"}
                     </td>
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
                       {new Date(item.updatedAt).toLocaleDateString()}
