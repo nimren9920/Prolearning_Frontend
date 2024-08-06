@@ -4,6 +4,8 @@ import { TiTick } from "react-icons/ti";
 import Header from '../../../Navbar/header';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../../../Loading/Loading';
+
 const TestCheck = () => {
   const {id}=useParams()
   const [data, setData] = useState(null);
@@ -78,7 +80,7 @@ const TestCheck = () => {
   }, []);
 
   const handleScoreChange = (questionId, value) => {
-    const question = data.test.questions.find(q => q._id === questionId);
+    const question = data.data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: Math.max(0, Math.min(value, question.score))
@@ -86,7 +88,7 @@ const TestCheck = () => {
   };
 
   const handleMarkAsRight = (questionId) => {
-    const question = data.test.questions.find(q => q._id === questionId);
+    const question = data.data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: question.score
@@ -97,7 +99,7 @@ const TestCheck = () => {
   };
 
   const handleMarkAsWrong = (questionId) => {
-    const question = data.test.questions.find(q => q._id === questionId);
+    const question = data.data.test.questions.find(q => q._id === questionId);
     setResponses(prevResponses => ({
       ...prevResponses,
       [questionId]: 0
@@ -115,7 +117,7 @@ const TestCheck = () => {
   const handleSubmit = () => {
     let newTotalScore = 0;
     
-    data.test.questions.forEach(question => {
+    data.data.test.questions.forEach(question => {
       const userScore = responses[question._id] || 0;
       if (userScore === question.score) {
         newTotalScore += question.score;
@@ -134,26 +136,23 @@ const TestCheck = () => {
     console.log(body);
   };
 
-  if (!data) {
-    return <div>Loading...</div>;
-  }
 
-  const { test, pdfPath, grade } = data;
+  
 
   return (
     <div className={`${isSideNavOpen ? 'sm:ml-64' : ''}`}>
           <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} />
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+         {data ? <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="flex-1">
         <div className="h-[600px] bg-muted rounded-lg overflow-hidden">
-          <iframe src={pdfPath} title="Test PDF" className="w-full h-full"></iframe>
+          <iframe src={data.pdfPath} title="Test PDF" className="w-full h-full"></iframe>
         </div>
       </div>
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Assessment Questions for {test.name}</h2>
+          <h2 className="text-2xl font-bold">Assessment Questions for {data.test.name}</h2>
           <div className="grid gap-4">
-            {test.questions.map((question) => (
+            {data.test.questions.map((question) => (
               <div key={question._id} className="grid grid-cols-[1fr_80px_80px] items-center gap-4">
                 <p>{question.question}</p>
                 <input
@@ -183,7 +182,7 @@ const TestCheck = () => {
             ))}
           </div>
           <div className="mt-4">
-            <div className="text-lg font-semibold">Grade: {grade}</div>
+            <div className="text-lg font-semibold">Grade: {data.grade}</div>
             <div className="text-md mt-2">
               Feedback:
               <textarea
@@ -202,7 +201,7 @@ const TestCheck = () => {
           </button>
         </div>
       </div>
-    </div>
+    </div> :<Loading/>}
  </div>
   );
 };
