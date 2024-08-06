@@ -20,7 +20,7 @@ function Auth({ children, aut = true }) {
     }
 
     setloader(true);
-  }, [authstate, navigate, aut]);
+  }, [authstate, navigate, aut,authrole]);
 
   return loader ? <>{children}</> : <Loading />;
 }
