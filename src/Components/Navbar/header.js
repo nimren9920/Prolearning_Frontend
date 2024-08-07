@@ -120,14 +120,21 @@ const Header = ({ isSideNavOpen, setIsSideNavOpen }) => {
               <span className="text-sm font-medium">Study Material</span>
             </Link>
           )}
-          <Link
+       {data?.role === "STUDENT" &&   <Link
             to={`/${data?.role}/test`}
             className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
           >
             <FaRegPenToSquare size={20} className="text-red-500" />
             <span className="text-sm font-medium">MCQ Test</span>
-          </Link>
-          {data?.role !== "PARENT" && (
+          </Link>}
+          {data?.role === "TEACHER" &&   <Link
+            to={`/${data?.role}/check/ptest`}
+            className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
+          >
+            <FaRegPenToSquare size={20} className="text-red-500" />
+            <span className="text-sm font-medium">Physical Test Check</span>
+          </Link>}
+          {data?.role === "STUDENT" && (
             <Link
               to={`/${data?.role}/physical-test`}
               className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"
@@ -136,7 +143,7 @@ const Header = ({ isSideNavOpen, setIsSideNavOpen }) => {
               <span className="text-sm font-medium">Physical Test</span>
             </Link>
           )}
-          {data?.role !== "PARENT" && (
+          {data?.role === "STUDENT" && (
             <Link
               to={`/${data?.role}/community`}
               className="flex items-center gap-2 p-2 rounded-md hover:bg-[#FF725E] hover:text-white transition-colors"

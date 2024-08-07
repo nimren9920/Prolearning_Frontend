@@ -16,7 +16,7 @@ const Topics = () => {
   const [data,setdata]=useState()
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_API_URL}/api/chapters/${id}`).then(res=>{setdata(res.data.data);console.log(res.data.data);}).catch(err=>console.log(err))
-  },[])
+  },[id])
   return (
     <div className={`${isSideNavOpen? 'sm:ml-64': ''}`} >
    <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen}/>

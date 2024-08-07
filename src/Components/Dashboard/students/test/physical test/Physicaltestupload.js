@@ -1,4 +1,4 @@
-import React ,{useState ,useEffect, useRef} from 'react'
+import React ,{useState ,useEffect} from 'react'
 import Header from '../../../../Navbar/header';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -134,7 +134,7 @@ const Physicaltestupload = () => {
             <path d="M16 8 2 22"></path>
             <path d="M17.5 15H9"></path>
           </svg> */}
-          <h2 class="text-xl font-bold"></h2>
+          
         </div>
         <div class="flex items-center gap-2 text-muted-foreground">
           <svg
