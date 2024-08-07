@@ -13,6 +13,8 @@ const TestCheck = () => {
   const [totalScore, setTotalScore] = useState(0);
   const [grade, setGrade] = useState("Not graded");
   const { id } = useParams();
+  const [check,setcheck]=useState('')
+  const [err,seterr]=useState('')
   useEffect(() => {
     const fetchData = async () => {
          axios.defaults.withCredentials = true;
@@ -99,17 +101,18 @@ const TestCheck = () => {
       score: newTotalScore,
       recommendations,
       feedback: feedback || data.feedback,
-      grade: grade
+      grade: newGrade
       
     };
+    
     axios.defaults.withCredentials = true;
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/grade`,
         body
       )
-      .then((res) => console.log("Succesfully updated"))
-      .catch((err) => console.log(err));
+      .then((res) => setcheck("Succesfully Graded the Submission"))
+      .catch((err) => seterr(err));
     console.log(body);
   };
   console.log(data);
@@ -186,6 +189,8 @@ const TestCheck = () => {
               />
             </div>
           </div>
+          {check && <p className="text-green-500 ">{check}</p>}
+          {err && <p className="text-red-500 ">{err}</p>}
           <button
             onClick={handleSubmit}
             className="mt-4 inline-flex items-center justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-white text-sm font-medium shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
