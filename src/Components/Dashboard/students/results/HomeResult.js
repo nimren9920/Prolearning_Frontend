@@ -6,7 +6,7 @@ import Header from "../../../Navbar/header";
 const HomeResult = () => {
   const { id } = useParams();
   const [data, setdata] = useState();
-  const [err, seterr] = useState();
+  // const [err, seterr] = useState();
   const [isSideNavOpen, setIsSideNavOpen] = useState(false)
 
   useEffect(() => {
