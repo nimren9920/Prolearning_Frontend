@@ -8,24 +8,26 @@ const CustomSubject = () => {
   const imageMapping = {
     math: "https://t4.ftcdn.net/jpg/05/51/43/61/240_F_551436197_pNDNeD5zSx2Sdm4LAHrRPyjSAHsv3M3V.jpg",
     science: "https://us.123rf.com/450wm/captainvector/captainvector2208/captainvector220805169/189725517-science-subject-icon.jpg?ver=6",
-    // Add more subject-image mappings here
   };
   const handleDropdownChange = (event) => {
     setId(event.target.value);
   };
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/${id}`)
-      .then((res) => {
-        if (res.data.data.standards[0]) {
-          setdata(res.data.data.standards[0]);
-        } else {
-          setdata("No Data");
-        }
+ function getdata() {
+  axios
+  .get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/${id}`)
+  .then((res) => {
+    if (res.data.data.standards[0]) {
+      setdata(res.data.data.standards[0]);
+    } else {
+      setdata("No Data");
+    }
 
-        console.log(data.data.standards);
-      })
-      .catch((err) => console.log(err));
+    console.log(data.data.standards);
+  })
+  .catch((err) => console.log(err));
+ }
+ getdata()
   }, [id]);
 
   return (

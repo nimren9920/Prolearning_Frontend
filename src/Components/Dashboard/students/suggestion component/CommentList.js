@@ -75,13 +75,13 @@ const CommentList = ({ topicId, refreshTrigger, refreshComments }) => {
           onClick={() => handleUpvote(comment._id)}
         >
           
-          {comment.upvotes.indexOf(userid)==-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
+          {comment.upvotes.indexOf(userid)===-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
           </button>:       <button
           className="text-green-500 hover:underline flex items-center"
           onClick={() => handleupdatesubcomment(comment._id)}
         >
           {console.log(comment.upvotes.indexOf(userid))}
-{comment.upvotes.indexOf(userid)==-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
+{comment.upvotes.indexOf(userid)===-1 ? <BsHandThumbsUp/> :<BsHandThumbsUpFill/> }({comment.upvotes.length})
         </button>}
         </div>
         {replyTo === comment._id && (
