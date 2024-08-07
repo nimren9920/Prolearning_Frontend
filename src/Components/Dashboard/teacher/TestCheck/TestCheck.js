@@ -14,59 +14,8 @@ const TestCheck = () => {
   const [grade, setGrade] = useState("Not graded");
   const { id } = useParams();
   useEffect(() => {
-    // Simulate fetching data
     const fetchData = async () => {
-      // const response = {
-      //   "statusCode": 200,
-      //   "data": {
-      //     "_id": "66b1ec4861713445db010153",
-      //     "student": {
-      //       "_id": "667537a74fb9256286cc586e",
-      //       "fullName": "TestStudent"
-      //     },
-      //     "teacher": {
-      //       "_id": "6675373f4fb9256286cc5867",
-      //       "fullName": "Test Teacher"
-      //     },
-      //     "test": {
-      //       "_id": "66b1d5ae2f09aa42b91e7aa0",
-      //       "name": "The First Math Test",
-      //       "teacher": "6675373f4fb9256286cc5867",
-      //       "standard": 10,
-      //       "subject": "Mathematics",
-      //       "questions": [
-      //         {
-      //           "question": "The 2+2 ?",
-      //           "topicId": "66753c8d4fb9256286cc588c",
-      //           "score": 1,
-      //           "_id": "66b1d5ae2f09aa42b91e7aa1"
-      //         },
-      //         {
-      //           "question": "The 2-2 ?",
-      //           "topicId": "66964c69d45f22f0f12fda9f",
-      //           "score": 2,
-      //           "_id": "66b1d5ae2f09aa42b91e7aa2"
-      //         }
-      //       ],
-      //       "score": 3,
-      //       "createdAt": "2024-08-06T07:50:06.070Z",
-      //       "updatedAt": "2024-08-06T07:50:06.070Z",
-      //       "__v": 0
-      //     },
-      //     "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1722936392/d5e8pgiezbdpzbhesovu.pdf",
-      //     "grade": "Not graded",
-      //     "feedback": "",
-      //     "createdAt": "2024-08-06T09:26:32.856Z",
-      //     "updatedAt": "2024-08-06T09:26:32.856Z",
-      //     "__v": 0
-      //   },
-      //   "message": "Answer copy fetched successfully",
-      //   "success": true
-      // };
-
-      // setData(response.data);
-
-      axios.defaults.withCredentials = true;
+         axios.defaults.withCredentials = true;
       axios
         .get(
           `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/${id}`
