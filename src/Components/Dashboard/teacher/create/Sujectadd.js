@@ -100,7 +100,7 @@ const Createsubject = () => {
           </div>
           {console.log(standardata)}
           {standardata ? (
-            standardata == "No Data" ? (
+            standardata === "No Data" ? (
               <h1>No Standard. You need to add it.</h1>
             ) : (
               <>

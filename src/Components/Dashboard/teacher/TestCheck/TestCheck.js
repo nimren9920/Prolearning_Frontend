@@ -1,154 +1,198 @@
-import React, { useState, useEffect } from 'react';
-import { IoClose } from "react-icons/io5";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Loading from "../../../Loading/Loading";
 import { TiTick } from "react-icons/ti";
-import Header from '../../../Navbar/header';
+import { IoMdClose } from "react-icons/io";
+
 const TestCheck = () => {
   const [data, setData] = useState(null);
   const [responses, setResponses] = useState({});
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState("");
   const [recommendations, setRecommendations] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
-  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
-
+  const [grade, setGrade] = useState("Not graded");
+  const { id } = useParams();
   useEffect(() => {
     // Simulate fetching data
     const fetchData = async () => {
-      const response = {
-        "statusCode": 200,
-        "data": {
-          "_id": "667a6e9ff32db31fd377c42a",
-          "student": {
-            "_id": "667537a74fb9256286cc586e",
-            "fullName": "TestStudent"
-          },
-          "teacher": {
-            "_id": "6675373f4fb9256286cc5867",
-            "fullName": "Test Teacher"
-          },
-          "test": {
-            "_id": "66ad0d601ca3576e87da43ec",
-            "name": "The First Science Test",
-            "teacher": {
-              "_id": "6675373f4fb9256286cc5867",
-              "fullName": "Test Teacher"
-            },
-            "standard": 10,
-            "subject": "Science",
-            "questions": [
-              {
-                "question": "What is Newton First Law with formulas?",
-                "topicId": "66ad0d321ca3576e87da43de",
-                "score": 2,
-                "_id": "66ad0d601ca3576e87da43ed"
-              },
-              {
-                "question": "What is Newtoasdn First Law with formulas?",
-                "topicId": "66ad0d32asd1ca3576e87da43de",
-                "score": 3,
-                "_id": "66ad0d601casda3576e87da43ed"
-              }
-              // Add more questions here
-            ],
-            "score": 2,
-            "createdAt": "2024-08-02T16:46:24.263Z",
-            "updatedAt": "2024-08-02T16:46:24.263Z",
-            "__v": 0
-          },
-          "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1719299743/vp7vbe8q6uihkn1eizyi.pdf",
-          "grade": "B+",
-          "feedback": "Improve the specific topic",
-          "createdAt": "2024-06-25T07:15:43.792Z",
-          "updatedAt": "2024-08-05T17:12:22.796Z",
-          "__v": 0
-        },
-        "message": "Answer copy fetched successfully",
-        "success": true
-      };
+      // const response = {
+      //   "statusCode": 200,
+      //   "data": {
+      //     "_id": "66b1ec4861713445db010153",
+      //     "student": {
+      //       "_id": "667537a74fb9256286cc586e",
+      //       "fullName": "TestStudent"
+      //     },
+      //     "teacher": {
+      //       "_id": "6675373f4fb9256286cc5867",
+      //       "fullName": "Test Teacher"
+      //     },
+      //     "test": {
+      //       "_id": "66b1d5ae2f09aa42b91e7aa0",
+      //       "name": "The First Math Test",
+      //       "teacher": "6675373f4fb9256286cc5867",
+      //       "standard": 10,
+      //       "subject": "Mathematics",
+      //       "questions": [
+      //         {
+      //           "question": "The 2+2 ?",
+      //           "topicId": "66753c8d4fb9256286cc588c",
+      //           "score": 1,
+      //           "_id": "66b1d5ae2f09aa42b91e7aa1"
+      //         },
+      //         {
+      //           "question": "The 2-2 ?",
+      //           "topicId": "66964c69d45f22f0f12fda9f",
+      //           "score": 2,
+      //           "_id": "66b1d5ae2f09aa42b91e7aa2"
+      //         }
+      //       ],
+      //       "score": 3,
+      //       "createdAt": "2024-08-06T07:50:06.070Z",
+      //       "updatedAt": "2024-08-06T07:50:06.070Z",
+      //       "__v": 0
+      //     },
+      //     "pdfPath": "http://res.cloudinary.com/diat8d1ft/image/upload/v1722936392/d5e8pgiezbdpzbhesovu.pdf",
+      //     "grade": "Not graded",
+      //     "feedback": "",
+      //     "createdAt": "2024-08-06T09:26:32.856Z",
+      //     "updatedAt": "2024-08-06T09:26:32.856Z",
+      //     "__v": 0
+      //   },
+      //   "message": "Answer copy fetched successfully",
+      //   "success": true
+      // };
 
-      setData(response.data);
+      // setData(response.data);
+
+      axios.defaults.withCredentials = true;
+      axios
+        .get(
+          `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/${id}`
+        )
+        .then((res) => setData(res.data.data))
+        .catch((err) => console.log(err));
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleScoreChange = (questionId, value) => {
-    const question = data.test.questions.find(q => q._id === questionId);
-    setResponses(prevResponses => ({
+    const question = data.test.questions.find((q) => q._id === questionId);
+    setResponses((prevResponses) => ({
       ...prevResponses,
-      [questionId]: Math.max(0, Math.min(value, question.score))
+      [questionId]: Math.max(0, Math.min(value, question.score)),
     }));
   };
 
   const handleMarkAsRight = (questionId) => {
-    const question = data.test.questions.find(q => q._id === questionId);
-    setResponses(prevResponses => ({
+    const question = data.test.questions.find((q) => q._id === questionId);
+    setResponses((prevResponses) => ({
       ...prevResponses,
-      [questionId]: question.score
+      [questionId]: question.score,
     }));
-    setRecommendations(prevRecommendations =>
-      prevRecommendations.filter(rec => rec.questionId !== questionId)
+    setRecommendations((prevRecommendations) =>
+      prevRecommendations.filter((rec) => rec.questionId !== questionId)
     );
   };
 
   const handleMarkAsWrong = (questionId) => {
-    const question = data.test.questions.find(q => q._id === questionId);
-    setResponses(prevResponses => ({
+    const question = data.test.questions.find((q) => q._id === questionId);
+    setResponses((prevResponses) => ({
       ...prevResponses,
-      [questionId]: 0
+      [questionId]: 0,
     }));
-    setRecommendations(prevRecommendations => [
+    setRecommendations((prevRecommendations) => [
       ...prevRecommendations,
       {
         questionId: question._id,
         topicId: question.topicId,
-        score: question.score
-      }
+        score: question.score,
+      },
     ]);
   };
 
   const handleSubmit = () => {
     let newTotalScore = 0;
-    
-    data.test.questions.forEach(question => {
+    const totalPossibleScore = data.test.questions.reduce(
+      (acc, question) => acc + question.score,
+      0
+    );
+
+    data.test.questions.forEach((question) => {
       const userScore = responses[question._id] || 0;
-      if (userScore === question.score) {
-        newTotalScore += question.score;
-      }
+      newTotalScore += userScore;
     });
 
     setTotalScore(newTotalScore);
 
+    const percentage = (newTotalScore / totalPossibleScore) * 100;
+    let newGrade = "Fail";
+    if (percentage >= 90) {
+      newGrade = "A+";
+    } else if (percentage >= 80) {
+      newGrade = "A";
+    } else if (percentage >= 70) {
+      newGrade = "B";
+    } else if (percentage >= 60) {
+      newGrade = "C";
+    } else if (percentage >= 50) {
+      newGrade = "D";
+    } else if (percentage >= 35) {
+      newGrade = "E";
+    }
+
+    setGrade(newGrade);
+
     const body = {
-      answerid: data._id,
+      answerCopyId: data._id,
       score: newTotalScore,
       recommendations,
-      feedback: feedback || data.feedback
+      feedback: feedback || data.feedback,
+      grade: grade
+      
     };
-
+    axios.defaults.withCredentials = true;
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/grade`,
+        body
+      )
+      .then((res) => console.log("Succesfully updated"))
+      .catch((err) => console.log(err));
     console.log(body);
   };
+  console.log(data);
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
-  const { test, pdfPath, grade } = data;
+  const { test, pdfPath } = data;
 
   return (
-
-    <div className={`${isSideNavOpen ? 'sm:ml-64' : ''}`}>
-      <Header isSideNavOpen={isSideNavOpen} setIsSideNavOpen={setIsSideNavOpen} /> <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
+    <div className="grid md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
       <div className="flex-1">
         <div className="h-[600px] bg-muted rounded-lg overflow-hidden">
-          <iframe src={pdfPath} title="Test PDF" className="w-full h-full"></iframe>
+          <iframe
+            src={pdfPath}
+            title="Test PDF"
+            className="w-full h-full"
+          ></iframe>
         </div>
       </div>
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold">Assessment Questions for {test.name}</h2>
+          <h2 className="text-2xl font-bold">
+            Assessment Questions for {test.name}
+          </h2>
           <div className="grid gap-4">
             {test.questions.map((question) => (
-              <div key={question._id} className="grid grid-cols-[1fr_80px_80px] items-center gap-4">
+              <div
+                key={question._id}
+                className="grid grid-cols-[1fr_80px_80px] items-center gap-4"
+              >
                 <p>{question.question}</p>
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-right"
@@ -156,21 +200,26 @@ const TestCheck = () => {
                   type="number"
                   min="0"
                   max={question.score}
-                  value={responses[question._id] || ''}
-                  onChange={(e) => handleScoreChange(question._id, parseInt(e.target.value, 10))}
+                  value={responses[question._id] || ""}
+                  onChange={(e) =>
+                    handleScoreChange(
+                      question._id,
+                      parseInt(e.target.value, 10)
+                    )
+                  }
                 />
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleMarkAsRight(question._id)}
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-green-500 hover:bg-green-600 text-white w-8 h-8"
                   >
-                    <TiTick/>
+                    <TiTick />
                   </button>
                   <button
                     onClick={() => handleMarkAsWrong(question._id)}
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-red-500 hover:bg-red-600 text-white w-8 h-8"
                   >
-                    <IoClose/>
+                    <IoMdClose />
                   </button>
                 </div>
               </div>
@@ -194,10 +243,21 @@ const TestCheck = () => {
           >
             Submit
           </button>
+          <div className="mt-4">
+            <div className="text-lg font-semibold">
+              Total Score: {totalScore}
+            </div>
+            <div className="text-lg font-semibold">
+              Obtained/Total Marks: {totalScore} /{" "}
+              {test.questions.reduce(
+                (acc, question) => acc + question.score,
+                0
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div></div>
-   
+    </div>
   );
 };
 
