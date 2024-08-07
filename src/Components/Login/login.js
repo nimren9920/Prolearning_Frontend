@@ -92,7 +92,7 @@ const Login = () => {
                     <div className="flex flex-col mt-8 ">
                       <button
                         onClick={log}
-                        className="cursor-pointer flex w-full justify-center items-center rounded-md bg-[#FF726E] hover:bg-[#FF728E] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        className="cursor-pointer flex w-full justify-center items-center rounded-md bg-[#FF726E] hover:bg-[#FF728E] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                       >
                         {isLogging ? (
                           <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>

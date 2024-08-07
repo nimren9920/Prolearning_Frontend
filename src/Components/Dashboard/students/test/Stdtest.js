@@ -18,18 +18,7 @@ export const Stdtest = () => {
   const [test, setTest] = useState(null);
   const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   
-  const fetchTest = async (subject) => {
-    try {
-      axios.defaults.withCredentials = true;
-      const url = subject 
-        ? `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}/${subject}`
-        : `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}`;
-      const response = await axios.get(url);
-      setTest(response.data.data);
-    } catch (error) {
-      console.error('Error fetching test:', error);
-    }
-  };
+
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -47,10 +36,34 @@ export const Stdtest = () => {
   }, [Id]);
 
   useEffect(() => {
+    const fetchTest = async (subject) => {
+      try {
+        axios.defaults.withCredentials = true;
+        const url = subject 
+          ? `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}/${subject}`
+          : `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}`;
+        const response = await axios.get(url);
+        setTest(response.data.data);
+      } catch (error) {
+        console.error('Error fetching test:', error);
+      }
+    };
     fetchTest(subject);
   }, [subject, Id]);
 
   useEffect(() => {
+    const fetchTest = async (subject) => {
+      try {
+        axios.defaults.withCredentials = true;
+        const url = subject 
+          ? `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}/${subject}`
+          : `${process.env.REACT_APP_API_URL}/api/chapters/chapter-tests/standard/${Id}`;
+        const response = await axios.get(url);
+        setTest(response.data.data);
+      } catch (error) {
+        console.error('Error fetching test:', error);
+      }
+    };
     fetchTest('');
   }, [Id]);
 

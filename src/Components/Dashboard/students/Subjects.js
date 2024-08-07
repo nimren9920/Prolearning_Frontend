@@ -10,7 +10,7 @@ const Subjects = () => {
     // Add more subject-image mappings here
   };
   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/10`).then(res=>{setdata(res.data.data.standards[0]);console.log(data.data.standards);}).catch(err=>console.log(err))
+    axios.get(`${process.env.REACT_APP_API_URL}/api/subjects/standard/10`).then(res=>{setdata(res.data.data.standards[0]);}).catch(err=>console.log(err))
   },[])
   return (
     <>

@@ -23,7 +23,7 @@ const CustomSubject = () => {
       setdata("No Data");
     }
 
-    console.log(data.data.standards);
+   
   })
   .catch((err) => console.log(err));
  }
@@ -52,7 +52,7 @@ const CustomSubject = () => {
           <>
                         <div className="flex flex-col gap-2 p-2 m-2 sm:flex-row" >
 
-            {console.log(data.subjects)}
+           
           {data.subjects.map((datas,index)=>{
             return (
               <div className="flex flex-col items-center justify-center sm:w-[10%]" key={index}>

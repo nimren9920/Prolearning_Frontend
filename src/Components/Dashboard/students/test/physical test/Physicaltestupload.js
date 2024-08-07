@@ -31,12 +31,12 @@ const Physicaltestupload = () => {
     else{
       console.log("data");
 
-      const body={
-        studentId:stdid,
-        teacherId:data.teacher._id,
-        testId:id,
-        pdf:pdffile
-      }
+      // const body={
+      //   studentId:stdid,
+      //   teacherId:data.teacher._id,
+      //   testId:id,
+      //   pdf:pdffile
+      // }
 
 const formData = new FormData();
 formData.append('studentId', stdid);
