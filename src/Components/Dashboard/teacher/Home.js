@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
     
-  <div className="flex flex-row gap-5 p-4 m-4">
+  <div className="flex flex-row flex-wrap gap-5 p-4 m-4">
 <Link to={"/create/topic"}>
 <div className="w-64 h-64  m-2 p-2 rounded-md shadow shadow-md shadow-current hover:scale-105 duration-300		">
 <div className="flex flex-col justify-between items-center h-full py-4" >
