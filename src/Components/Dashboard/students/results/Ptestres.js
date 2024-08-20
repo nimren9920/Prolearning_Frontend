@@ -37,12 +37,12 @@ const Ptestres = () => {
         <div className="grid grid-cols-1 gap-4">
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-2">Test Information</h2>
-            <p><strong>Test ID:</strong> {data.teacher.fullName}</p>
-            <p><strong>Student ID:</strong> {data.student.fullName}</p>
+            <p><strong>Test Checked By :</strong> {data.teacher.fullName}</p>
+            <p><strong>Student:</strong> {data.student.fullName}</p>
             <p><strong>Total Marks:</strong> {data.test.score}</p>
             <p><strong>Obtained Marks:</strong> {data.score}</p>
             <p><strong>Grade:</strong> {data.grade}</p>
-
+            <p><strong>View Submission:</strong> <Link to={data.pdfPath}>Click Here</Link></p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-2">Feedback</h2>

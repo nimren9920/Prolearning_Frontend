@@ -1,6 +1,6 @@
 import React ,{useState ,useEffect} from 'react'
 import Header from '../../../../Navbar/header';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 const Physicaltestupload = () => {
@@ -8,6 +8,8 @@ const Physicaltestupload = () => {
     const [isSideNavOpen, setIsSideNavOpen] = useState(false);
     const {id}=useParams()
     const [data,Setdata]=useState('')
+    const [res,Setresdata]=useState('')
+
   const [pdffile,setpdffile]=useState('')
     const stdid=useSelector(store=>store.user.data._id)
     const [err,seterr]=useState('')
@@ -15,6 +17,8 @@ const Physicaltestupload = () => {
         function testdata(){
             axios.defaults.withCredentials = true;
             axios.get(`${process.env.REACT_APP_API_URL}/api/physicaltest/physical-tests/${id}`).then(res=>Setdata(res.data.data)).catch(err=>console.log(err))
+            // http://localhost:8001/api/physicaltest/already_check/
+            axios.get(`${process.env.REACT_APP_API_URL}/api/physicaltest/already_check/${id}`).then(res=>Setresdata(res.data.data)).catch(err=>console.log(err))
         }
         testdata()
     }, [id])
@@ -231,8 +235,11 @@ formData.append('pdf', pdffile);
   </div>
 </div>
     </div>}
-          </div>
-    </>
+    <div className='flex justify-center items-center'>
+    <div className="bg-background rounded-lg border p-6 w-full max-w-3xl ">
+   <div> {res &&<><h2>Already Submited</h2> <Link to={`/student/ptest/result/${res?._id}`}>Check The Result</Link></>}</div>
+          </div></div></div>
+    </> 
   )
 }
 
