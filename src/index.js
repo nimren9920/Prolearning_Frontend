@@ -35,6 +35,7 @@ import { Physicaltest } from "./Components/Dashboard/students/test/physical test
 import Physicaltestupload from "./Components/Dashboard/students/test/physical test/Physicaltestupload.js";
 import { TCHome } from "./Components/Dashboard/teacher/TestCheck/TCHome.js";
 import TestCheckHome from "./Components/Dashboard/teacher/TestCheck/TestCheckHome.js";
+import Ptestres from "./Components/Dashboard/students/results/Ptestres.js";
 const routes = createBrowserRouter([
   {
     path: "/",
@@ -127,6 +128,11 @@ const routes = createBrowserRouter([
       path:"/student/test/result/:id",
 
       element:(<RoleAuth aut={true} role={"STUDENT"} ><HomeResult/></RoleAuth>)
+     },
+     {
+      path:"/student/ptest/result/:id",
+
+      element:(<RoleAuth aut={true} role={"STUDENT"} ><Ptestres/></RoleAuth>)
      },
      {
       path:"/student/physical-test",

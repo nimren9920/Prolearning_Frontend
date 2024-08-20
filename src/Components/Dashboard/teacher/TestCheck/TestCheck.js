@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "../../../Loading/Loading";
 import { TiTick } from "react-icons/ti";
 import { IoMdClose } from "react-icons/io";
 
 const TestCheck = () => {
+  const navigate=useNavigate()
   const [data, setData] = useState(null);
   const [responses, setResponses] = useState({});
   const [feedback, setFeedback] = useState("");
@@ -111,7 +112,9 @@ const TestCheck = () => {
         `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/grade`,
         body
       )
-      .then((res) => setcheck("Succesfully Graded the Submission"))
+      .then((res) => {setcheck("Succesfully Graded the Submission");setTimeout(() => {
+        navigate(-1)
+      }, 2000);})
       .catch((err) => seterr(err));
     console.log(body);
   };
