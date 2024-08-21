@@ -104,7 +104,7 @@ export const TCHome = () => {
                       {item.test.name}
                     </td>
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
-                      {item.grade ? item.score : "Not Checked Yet"}
+                      {item.grade!=="Not graded" ? item.score : "Not Checked Yet"}
                     </td>
                     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
                       {item.grade ? item.grade : "Not Checked Yet"}
