@@ -131,7 +131,7 @@ const TestCheck = () => {
       <div className="flex-1">
         <div className="h-[600px] bg-muted rounded-lg overflow-hidden">
           <iframe
-            src={pdfPath}
+            src={pdfPath.startsWith('http://') ? pdfPath.replace('http://', 'https://') : pdfPath}
             title="Test PDF"
             className="w-full h-full"
           ></iframe>
