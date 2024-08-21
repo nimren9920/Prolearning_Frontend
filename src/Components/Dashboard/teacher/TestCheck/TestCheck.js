@@ -115,7 +115,7 @@ const TestCheck = () => {
       .then((res) => {setcheck("Succesfully Graded the Submission");setTimeout(() => {
         navigate(-1)
       }, 2000);})
-      .catch((err) => seterr(err));
+      .catch((err) => console.log(err));
     console.log(body);
   };
   console.log(data);
