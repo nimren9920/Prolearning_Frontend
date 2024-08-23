@@ -134,6 +134,7 @@ const routes = createBrowserRouter([
 
       element:(<RoleAuth aut={true} role={"STUDENT"} ><Ptestres/></RoleAuth>)
      },
+     
      {
       path:"/student/physical-test",
 
