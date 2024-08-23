@@ -211,7 +211,7 @@ const TestComponent = () => {
       {isModalOpen && (
         
         <div className="pt-40 fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 overflow-y-auto ">
-      <div className="bg-white p-6 rounded-lg shadow-lg relative">
+      <div className=" p-6 rounded-lg shadow-lg relative">
         <Modal
           isOpen={isModalOpen}
           onClose={handleCloseModal}

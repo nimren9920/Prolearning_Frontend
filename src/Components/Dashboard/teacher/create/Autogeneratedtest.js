@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { IoClose } from "react-icons/io5";
+import { IoClose } from 'react-icons/io5';
 
 const CreateTestForm = ({ standard, subject, onClose }) => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
     topics: [],
     questionsPerTopic: ''
   });
-
+  const [loader,setLoader]=useState(false)
   const [subjects, setSubjects] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [availableTopics, setAvailableTopics] = useState([]);
@@ -102,41 +102,33 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
     const topicIdsArray = formData.topics.map(topic => topic.trim());
 
     try {
-        axios.defaults.withCredentials = true;
+      axios.defaults.withCredentials = true;
+
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/physicaltest/physical-tests/auto/genrated`, {
         topicIds: topicIdsArray,
         questionsPerTopic: parseInt(formData.questionsPerTopic)
       });
-      
+
       console.log('Questions retrieved successfully:', response.data);
-      // Handle success (e.g., show a success message or display questions)
       if (onClose) onClose(response?.data?.data);
 
     } catch (error) {
       console.error('Error retrieving questions:', error);
-      // Handle error (e.g., show an error message)
     }
   };
 
   return (
-
-   <>
-    
-    <form onSubmit={handleSubmit} className="p-4 max-w-xl mx-auto bg-white shadow-md rounded-md">
-    
-    <div className='flex flex-row justify-between gap-4'>
-    <h2 className="text-2xl font-bold mb-4">Generate Question  </h2>
-
-<IoClose className='m-1' size={30} onClick={()=>{onClose(false)}}/>
-    </div>
+    <form onSubmit={handleSubmit} className="p-6 bg-white shadow-lg rounded-lg space-y-4">
+     <div className='flex flex-row justify-between gap-4'> <h2 className="text-2xl font-bold mb-4">Genrate the Question</h2>
+     <IoClose size={32} onClick={()=>onClose(false)}/></div>
       {/* Standard Dropdown */}
-      <div className="mb-4">
+      <div>
         <label htmlFor="standard" className="block text-sm font-medium text-gray-700">Standard</label>
         <select
           name="standard"
           value={formData.standard}
           onChange={handleChange}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="">Select Standard</option>
           {Array.from({ length: 10 }, (_, i) => i + 1).map(standard => (
@@ -146,13 +138,13 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
       </div>
 
       {/* Subject Dropdown */}
-      <div className="mb-4">
+      <div>
         <label htmlFor="subject" className="block text-sm font-medium text-gray-700">Subject</label>
         <select
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="">Select Subject</option>
           {subjects.map(subject => (
@@ -162,14 +154,14 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
       </div>
 
       {/* Chapters Multi-Select */}
-      <div className="mb-4">
+      <div>
         <label htmlFor="chapters" className="block text-sm font-medium text-gray-700">Chapters</label>
         <select
           name="chapters"
           multiple
           value={formData.chapters}
           onChange={handleChapterSelection}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         >
           {chapters.map(chapter => (
             <option key={chapter._id} value={chapter._id}>{chapter.name}</option>
@@ -178,14 +170,14 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
       </div>
 
       {/* Topics Multi-Select */}
-      <div className="mb-4">
+      <div>
         <label htmlFor="topics" className="block text-sm font-medium text-gray-700">Topics</label>
         <select
           name="topics"
           multiple
           value={formData.topics}
           onChange={handleTopicSelection}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
         >
           {availableTopics.map(topic => (
             <option key={topic._id} value={topic._id}>{topic.name}</option>
@@ -194,22 +186,23 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
       </div>
 
       {/* Questions Per Topic */}
-      <div className="mb-4">
+      <div>
         <label htmlFor="questionsPerTopic" className="block text-sm font-medium text-gray-700">Questions Per Topic</label>
         <input
           type="number"
           name="questionsPerTopic"
           value={formData.questionsPerTopic}
           onChange={handleChange}
-          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm"
+          className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           required
         />
       </div>
 
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded-md shadow-md">Retrieve Questions</button>
-    
+      <button type="submit" className="flex justify-center items-center  bg-blue-500 text-white w-full p-2 rounded-md shadow-md hover:bg-blue-600 transition">
+        {!loader ?<>   <div className="animate-spin rounded-full h-5 w-5  border-t-2 border-b-2 border-white"></div>
+</> :"Retrieve Questions"}
+      </button>
     </form>
-   </>
   );
 };
 
