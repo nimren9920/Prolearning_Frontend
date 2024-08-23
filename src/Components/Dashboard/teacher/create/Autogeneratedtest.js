@@ -97,6 +97,7 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoader(true)
     e.preventDefault();
    
     const topicIdsArray = formData.topics.map(topic => topic.trim());
@@ -110,6 +111,7 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
       });
 
       console.log('Questions retrieved successfully:', response.data);
+      setLoader(false)
       if (onClose) onClose(response?.data?.data);
 
     } catch (error) {
@@ -198,8 +200,8 @@ const CreateTestForm = ({ standard, subject, onClose }) => {
         />
       </div>
 
-      <button type="submit" className="flex justify-center items-center  bg-blue-500 text-white w-full p-2 rounded-md shadow-md hover:bg-blue-600 transition">
-        {!loader ?<>   <div className="animate-spin rounded-full h-5 w-5  border-t-2 border-b-2 border-white"></div>
+      <button type="submit" className=" flex justify-center items-center  bg-blue-500 text-white w-full p-2 rounded-md shadow-md hover:bg-blue-600 transition">
+        {loader ?<>   <div className="animate-spin rounded-full h-5 w-5  border-t-2 border-b-2 border-white"></div>
 </> :"Retrieve Questions"}
       </button>
     </form>
