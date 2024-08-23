@@ -225,6 +225,7 @@ const TestComponent = () => {
 
       {questions.map((q, index) => (
         <div key={index} className="p-5 border-b border-gray-300">
+          <div className='flex flex-row gap-2'>
           <input
             type="text"
             value={q.question}
@@ -232,6 +233,13 @@ const TestComponent = () => {
             placeholder="Enter question"
             className="block w-full mt-2 p-2 border border-gray-300 rounded"
           />
+          <button
+            onClick={() => handleRemoveQuestion(index)}
+            className="mt-2 p-2 bg-red-500 text-white rounded"
+          >
+            X
+          </button>
+            </div>
             <select
             value={q.chapterId}
             onChange={(e) => handleChapterChange(index, e.target.value)}
@@ -265,12 +273,7 @@ const TestComponent = () => {
             placeholder="Enter score"
             className="block w-full mt-2 p-2 border border-gray-300 rounded"
           />
-          <button
-            onClick={() => handleRemoveQuestion(index)}
-            className="mt-2 p-2 bg-red-500 text-white rounded"
-          >
-            X
-          </button>
+          
         </div>
       ))}
       <button
