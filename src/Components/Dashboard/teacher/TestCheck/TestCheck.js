@@ -24,7 +24,7 @@ const TestCheck = () => {
           `${process.env.REACT_APP_API_URL}/api/physicaltest/answer-copies/${id}`
         )
         .then((res) => setData(res.data.data))
-        .catch((err) => console.log(err));
+        .catch((err) => seterr("Some Error Caught"));
     };
 
     fetchData();
