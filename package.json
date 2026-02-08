@@ -11,7 +11,7 @@
     "autoprefixer": "^10.4.16",
     "axios": "^1.7.4",
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1",
+    "jspdf": "^4.1.0",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
